@@ -705,6 +705,11 @@ var isCallback = function(node) {
         || !node.parent.parent.isMatch('Call(_, _)')
         || node.parent.isMatch('PropAccess(_, "call")')
         || node.parent.isMatch('PropAccess(_, "apply")')
+        || node.parent.isMatch('PropAccess(_, "bind")')
+        || (node.parent.parent.cons === "Call" &&
+            node.parent.parent[0].cons === "PropAccess" &&
+            node.parent.parent[1].length > 1 &&
+            CALLBACK_METHODS.indexOf(node.parent.parent[0][1].value) > -1)
         )
         return false;
     var result = 0;
