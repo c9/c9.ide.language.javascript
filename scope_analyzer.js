@@ -537,8 +537,7 @@ handler.analyze = function(value, ast, callback) {
                     if (inLoop && !inLoopAllowed) {
                         var pos = this.getPos();
                         // treehugger doesn't store info on the position of "function" token
-                        var line = handler.doc.getLine(pos.sl);
-                        var sc = line.substring(0, pos.sc).lastIndexOf("function");
+                        var sc = pos.sc;
                         markers.push({
                             pos: { sl: pos.sl, el: pos.sl, sc: sc, ec: sc + "function".length },
                             level: 'warning',
