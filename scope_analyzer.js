@@ -409,7 +409,11 @@ handler.complete = function(doc, fullAst, pos, currentNode, callback) {
     }));
 };
 
-handler.analyze = function(value, ast, callback) {
+/**
+ * @param minimalAnalysis  Only analyse bare basics, don't investigate errors.
+ *                         Most useful for inference analysis.
+ */
+handler.analyze = function(value, ast, callback, minimalAnalysis) {
     var handler = this;
     var markers = [];
     
@@ -663,7 +667,7 @@ handler.analyze = function(value, ast, callback) {
 
     var jshintMarkers = [];
     var jshintGlobals = {};
-    if (handler.isFeatureEnabled("jshint")) {
+    if (handler.isFeatureEnabled("jshint") && !minimalAnalysis) {
         jshintMarkers = jshint.analyzeSync(value, ast);
         jshintGlobals = jshint.getGlobals();
     }
