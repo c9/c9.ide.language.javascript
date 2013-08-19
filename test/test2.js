@@ -43,3 +43,11 @@ a.b[x] = function() {
 a.b.c = function() {
     
 }
+
+handler = function() {
+    
+}
+
+alias = handler = function() {
+    
+}

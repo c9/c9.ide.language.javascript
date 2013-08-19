@@ -44,7 +44,12 @@ function expressionToName(node) {
     var name;
     node.rewrite(
         'Var(x)', function(b) { name = b.x.value; },
-        'PropAccess(e, x)', function(b) { name = b.x.value; }
+        'PropAccess(e, x)', function(b) { name = b.x.value; },
+        'Index(e, x)', function(b) {
+            var parent = (b.e[1] || b.e[0]).value || "";
+            if (b.x[0])
+                name = parent + "[" + b.x[0].value + "]";
+        }
     );
     return name;
 }
@@ -62,7 +67,7 @@ var outlineSync = outlineHandler.outlineSync = function(doc, node, includeProps)
                 icon: 'method',
                 name: name + fargsToString(b.fargs),
                 pos: this[1].getPos(),
-                displayPos: b.e.cons === 'PropAccess' && b.e[1].getPos(),
+                displayPos: (b.e[1] || b.e[0] || b.e).getPos(),
                 items: outlineSync(doc, b.body, includeProps)
             });
             return this;
@@ -126,7 +131,7 @@ var outlineSync = outlineHandler.outlineSync = function(doc, node, includeProps)
                 icon: 'property',
                 name: name,
                 pos: this[1].getPos(),
-                displayPos: b.x[1].getPos(),
+                displayPos: (b.x[1] || b.x[0] || b.x).getPos(),
                 items: items
             });
             return this;
