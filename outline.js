@@ -44,47 +44,16 @@ function expressionToName(node) {
     var name;
     node.rewrite(
         'Var(x)', function(b) { name = b.x.value; },
-        'PropAccess(e, x)', function(b) { name = b.x.value; }
+        'PropAccess(e, x)', function(b) { name = b.x.value; },
+        'Index(e, x)', function(b) {
+            var parent = (b.e[1] || b.e[0]).value || "";
+            if (b.x[0])
+                name = parent + "[" + b.x[0].value + "]";
+        }
     );
     return name;
 }
 
-function getIdentifierPosBefore(doc, pos) {
-    if (!pos)
-        return null;
-    for (var sl = pos.sl; sl >= 0; sl--) {
-        var line = doc.getLine(sl);
-        var foundId = false;
-        for (var sc = pos.sc; sc > 1; sc--) {
-            if (ID_REGEX.test(line[sc - 1]))
-                foundId = true;
-            else if (foundId)
-                break;
-        }
-        if (foundId)
-            break;
-        pos.sc = sl > 0 && doc.getLine(sl - 1).length - 1;
-    }
-    for (var ec = sc; ec < line.length; ec++) {
-        if (!ID_REGEX.test(line[ec]))
-            break;
-    }
-    var result = { sl: sl, el: sl, sc: sc, ec: ec};
-    if (line.substring(sc, ec) === 'function')
-        return getIdentifierPosBefore(doc, result);
-    return result;
-}
-
-// HACK: fix incorrect pos info for string literals
-function fixStringPos(doc, node) { 
-    var pos = node.getPos();
-    var line = doc.getLine(pos.el);
-    if (line[pos.ec] !== '"')
-        pos.ec += 2;
-    pos.sc++;
-    pos.ec--;
-    return pos;
-}
 
 // This is where the fun stuff happens
 var outlineSync = outlineHandler.outlineSync = function(doc, node, includeProps) {
@@ -98,7 +67,7 @@ var outlineSync = outlineHandler.outlineSync = function(doc, node, includeProps)
                 icon: 'method',
                 name: name + fargsToString(b.fargs),
                 pos: this[1].getPos(),
-                displayPos: b.e.cons === 'PropAccess' && getIdentifierPosBefore(doc, this[1].getPos()) || b.e.getPos(),
+                displayPos: (b.e[1] || b.e[0] || b.e).getPos(),
                 items: outlineSync(doc, b.body, includeProps)
             });
             return this;
@@ -120,20 +89,8 @@ var outlineSync = outlineHandler.outlineSync = function(doc, node, includeProps)
                 icon: 'method',
                 name: b.x.value + fargsToString(b.fargs),
                 pos: this[1].getPos(),
-                displayPos: getIdentifierPosBefore(doc, this.getPos()),
+                displayPos: b.x.getPos(),
                 items: outlineSync(doc, b.body, includeProps)
-            });
-            return this;
-        },
-        'PropertyInit(x, e)', function(b) {
-            if (!includeProps)
-                return;
-            
-            results.push({
-                icon: 'property',
-                name: b.x.value,
-                pos: this.getPos(),
-                displayPos: getIdentifierPosBefore(doc, this.getPos())
             });
             return this;
         },
@@ -152,13 +109,13 @@ var outlineSync = outlineHandler.outlineSync = function(doc, node, includeProps)
         },
         'PropertyInit(x, e)', function(b) {
             var items = outlineSync(doc, b.e, includeProps);
-            if (items.length === 0)
+            if (items.length === 0 && !includeProps)
                 return this;
             results.push({
                 icon: 'property',
                 name: b.x.value,
-                pos: this[1].getPos(),
-                displayPos: getIdentifierPosBefore(doc, this.getPos()),
+                pos: items.length ? this[1].getPos() : this.getPos(),
+                displayPos: b.x.getPos(),
                 items: items
             });
             return this;
@@ -174,7 +131,7 @@ var outlineSync = outlineHandler.outlineSync = function(doc, node, includeProps)
                 icon: 'property',
                 name: name,
                 pos: this[1].getPos(),
-                displayPos: getIdentifierPosBefore(doc, this.getPos()),
+                displayPos: (b.x[1] || b.x[0] || b.x).getPos(),
                 items: items
             });
             return this;
@@ -188,7 +145,7 @@ var outlineSync = outlineHandler.outlineSync = function(doc, node, includeProps)
                 icon: 'event',
                 name: eventHandler.s[0].value,
                 pos: this.getPos(),
-                displayPos: fixStringPos(doc, eventHandler.s),
+                displayPos: eventHandler.s.getPos(),
                 items: eventHandler.body && outlineSync(doc, eventHandler.body, includeProps)
             });
             return this;
