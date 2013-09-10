@@ -395,7 +395,7 @@ handler.getIdentifierRegex = function() {
 
 handler.complete = function(doc, fullAst, pos, currentNode, callback) {
     var line = doc.getLine(pos.row);
-    var identifier = completeUtil.retrievePrecedingIdentifier(line, pos.column);
+    var identifier = completeUtil.retrievePrecedingIdentifier(line, pos.column, handler.getIdentifierRegex());
 
     var matches = completeUtil.findCompletions(identifier, SCOPE_ARRAY);
     callback(matches.map(function(m) {
