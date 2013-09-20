@@ -35,6 +35,7 @@ handler.analyzeSync = function(value, ast) {
 
     lint(value, {
         maxerr: 100,
+        validthis: true,
         es5: true,
         undef: false,
         onevar: false,
