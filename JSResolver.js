@@ -44,7 +44,7 @@ define(function(require, exports, module) {
         var preview = "<b>Add semicolon</b><p>" + before + "<b>; </b>" + after + "</p>";
         
         var insert = ";";
-        if (afterLength){
+        if (after.length){
             insert += " ";
         }
 
