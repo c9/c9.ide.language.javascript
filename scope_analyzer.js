@@ -454,14 +454,46 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
             }
             node.traverseTopDown(
                 'VarDecl(x)', 'ConstDecl(x)', function(b) {
-                    mustUseVars.push(scope.get(b.x.value));
+                    var v = scope.get(b.x.value);
+                    mustUseVars.push(v);
+                    if (v.declarations.length > 1 && v.declarations[0] !== b.x) {
+                        for (var i = 0; i < v.declarations.length; i++) {
+                            // Get VarDecls([VarDecl(x)...]) parent
+                            var varDeclsNode = v.declarations[i].parent.parent.parent;
+                            if (["For", "ForIn"].indexOf(varDeclsNode.parent.cons) !== -1)
+                                continue;
+                            markers.push({
+                                pos: b.x.getPos(),
+                                level: 'warning',
+                                type: 'warning',
+                                message: "Var '" + b.x.value + "' is already declared"
+                            });
+                            return;
+                        }
+                    }
                 },
-                'VarDeclInit(x, e)', 'ConstDeclInit(x, e)', function(b) {
+                'VarDeclInit(x, e)', 'ConstDeclInit(x, e)', function(b, node) {
                     // Allow unused function declarations
                     while (b.e.isMatch('Assign(_, _)'))
                         b.e = b.e[1];
+                    var v = scope.get(b.x.value);
                     if (!b.e.isMatch('Function(_, _, _)'))
-                        mustUseVars.push(scope.get(b.x.value));
+                        mustUseVars.push(v);
+                    if (v.declarations.length > 1 && v.declarations[0] !== b.x) {
+                        for (var i = 0; i < v.declarations.length; i++) {
+                            // Get VarDecls([VarDecl(x)...]) parent
+                            var varDeclsNode = v.declarations[i].parent.parent.parent;
+                            if (["For", "ForIn"].indexOf(varDeclsNode.parent.cons) !== -1)
+                                continue;
+                            markers.push({
+                                pos: b.x.getPos(),
+                                level: 'warning',
+                                type: 'warning',
+                                message: "Var '" + b.x.value + "' is already declared"
+                            });
+                            return;
+                        }
+                    }
                 },
                 'Assign(Var(x), e)', function(b, node) {
                     if (!scope.isDeclared(b.x.value)) {
@@ -761,7 +793,7 @@ handler.onCursorMovedNode = function(doc, fullAst, cursorPos, currentNode, callb
             var v = scope.get(b.x.value);
             highlightVariable(v);
             // Let's not enable renaming 'this' and only rename declared variables
-            if(b.x.value !== "this" && v)
+            if (b.x.value !== "this" && v)
                 enableRefactorings.push("renameVariable");
         },
         'VarDeclInit(x, _)', 'ConstDeclInit(x, _)', function(b) {
@@ -778,7 +810,7 @@ handler.onCursorMovedNode = function(doc, fullAst, cursorPos, currentNode, callb
         },
         'Function(x, _, _)', function(b, node) {
             // Only for named functions
-            if(!b.x.value || !node.getAnnotation("scope"))
+            if (!b.x.value || !node.getAnnotation("scope"))
                 return;
             highlightVariable(node.getAnnotation("scope").get(b.x.value));
             enableRefactorings.push("renameVariable");

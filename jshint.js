@@ -52,7 +52,8 @@ handler.analyzeSync = function(value, ast) {
         multistr: true,
         onecase: true,
         proto: true,
-        moz: true
+        moz: true,
+        shadow: true
     });
     
     lint.errors.forEach(function(warning) {
