@@ -457,11 +457,11 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                     var v = scope.get(b.x.value);
                     mustUseVars.push(v);
                     if (v.declarations.length > 1 && v.declarations[0] !== b.x) {
+                        var forsSeen = [];
                         for (var i = 0; i < v.declarations.length; i++) {
-                            // Get VarDecls([VarDecl(x)...]) parent
-                            var varDeclsNode = v.declarations[i].parent.parent.parent;
-                            if (["For", "ForIn"].indexOf(varDeclsNode.parent.cons) !== -1)
+                            if (markForLoopDeclare(v.declarations[i], forsSeen))
                                 continue;
+                            
                             markers.push({
                                 pos: b.x.getPos(),
                                 level: 'warning',
@@ -480,11 +480,11 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                     if (!b.e.isMatch('Function(_, _, _)'))
                         mustUseVars.push(v);
                     if (v.declarations.length > 1 && v.declarations[0] !== b.x) {
+                        var forsSeen = [];
                         for (var i = 0; i < v.declarations.length; i++) {
-                            // Get VarDecls([VarDecl(x)...]) parent
-                            var varDeclsNode = v.declarations[i].parent.parent.parent;
-                            if (["For", "ForIn"].indexOf(varDeclsNode.parent.cons) !== -1)
+                            if (markForLoopDeclare(v.declarations[i], forsSeen))
                                 continue;
+                            
                             markers.push({
                                 pos: b.x.getPos(),
                                 level: 'warning',
@@ -710,6 +710,31 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
 
     callback(markers.concat(jshintMarkers));
 };
+
+/**
+ * Returns true if the current declaration node
+ * is declared as part of a for loop expression,
+ * and there have been no for loops that had 
+ * that expression yet.
+ *
+ * @param forsSeen   The list of for loops seen. We'll walk up the
+ *                   tree and add any for loops we see to this list.
+ */
+var markForLoopDeclare = function(decl, forsSeen) {
+    // Get VarDecls([VarDecl(x)...]) parent
+    var varDeclsNode = decl.parent.parent.parent;
+    if (["For", "ForIn"].indexOf(varDeclsNode.parent.cons) === -1)
+        return false;
+    var result = true;
+    varDeclsNode.parent.traverseUp(
+        "For(_,_,_,_)", "ForIn(_,_)", function(b, node) {
+            if (forsSeen.indexOf(varDeclsNode.parent) !== -1)
+                result = false;
+            forsSeen.push(node);
+        }
+    );
+    return result;
+}
 
 /**
  * Determine if any callbacks in the current call
