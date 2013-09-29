@@ -35,11 +35,13 @@ handler.isParsingSupported = function() {
 }; 
 
 handler.findNode = function(ast, pos, callback) {
-    callback(ast.findNode(pos));
+    var treePos = { line: pos.row, col: pos.column };
+    callback(ast.findNode(treePos));
 };
 
 handler.getPos = function(node, callback) {
-    callback(node.getPos());
+    var pos = node.getPos();
+    callback({ row: pos.line, column: pos.col });
 };
 
 /* Ready to be enabled to replace Narcissus, when mature
