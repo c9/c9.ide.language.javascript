@@ -407,7 +407,8 @@ handler.complete = function(doc, fullAst, pos, currentNode, callback) {
           replaceText : m,
           icon        : null,
           meta        : "EcmaScript",
-          priority    : 0
+          priority    : 0,
+          isGeneric   : true
         };
     }));
 };
