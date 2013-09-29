@@ -37,6 +37,9 @@ var IN_CALLBACK_BODY_MAYBE = 3;
 var IN_LOOP = 1;
 var IN_LOOP_ALLOWED = 2;
 
+var lastValue;
+var lastAST;
+
 // Based on https://github.com/jshint/jshint/blob/master/jshint.js#L331
 var GLOBALS = {
     // Literals
@@ -416,6 +419,11 @@ handler.complete = function(doc, fullAst, pos, currentNode, callback) {
 handler.analyze = function(value, ast, callback, minimalAnalysis) {
     var handler = this;
     var markers = [];
+    
+    if (minimalAnalysis && value === lastValue && lastAST == ast)
+        return callback();
+    lastValue = value;
+    lastAST = ast;
     
     // Preclare variables (pre-declares, yo!)
     function preDeclareHoisted(scope, node) {
