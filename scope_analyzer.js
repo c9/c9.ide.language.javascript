@@ -786,7 +786,7 @@ var isCallback = function(node) {
     return result;
 };
 
-handler.onCursorMovedNode = function(doc, fullAst, cursorPos, currentNode, callback) {
+handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, callback) {
     if (!currentNode)
         return callback();
 
