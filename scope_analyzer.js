@@ -15,7 +15,7 @@
 define(function(require, exports, module) {
 
 var baseLanguageHandler = require('plugins/c9.ide.language/base_handler');
-var completeUtil = require("plugins/c9.ide.language.generic/complete_util");
+var completeUtil = require("plugins/c9.ide.language/complete_util");
 var handler = module.exports = Object.create(baseLanguageHandler);
 var outline = require("plugins/c9.ide.language.javascript/outline");
 var jshint = require("plugins/c9.ide.language.javascript/jshint");
@@ -795,7 +795,7 @@ var isCallback = function(node) {
     return result;
 };
 
-handler.onCursorMovedNode = function(doc, fullAst, cursorPos, currentNode, callback) {
+handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, callback) {
     if (!currentNode)
         return callback();
 
