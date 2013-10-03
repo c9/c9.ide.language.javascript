@@ -20,6 +20,7 @@ var handler = module.exports = Object.create(baseLanguageHandler);
 var outline = require("plugins/c9.ide.language.javascript/outline");
 var jshint = require("plugins/c9.ide.language.javascript/jshint");
 var JSResolver = require('plugins/c9.ide.language.javascript/JSResolver').JSResolver;
+var assert = require("plugins/c9.util/assert");
 require("treehugger/traverse"); // add traversal functions to trees
 
 var CALLBACK_METHODS = ["forEach", "map", "reduce", "filter", "every", "some"];
@@ -798,6 +799,8 @@ var isCallback = function(node) {
 handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, callback) {
     if (!currentNode)
         return callback();
+    
+    assert(fullAst.annos.scope, "AST must be analyzed first");
 
     var markers = [];
     var enableRefactorings = [];
@@ -863,6 +866,8 @@ handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, ca
 handler.getVariablePositions = function(doc, fullAst, cursorPos, currentNode, callback) {
     if (!fullAst)
         return callback();
+    
+    assert(fullAst.annos.scope, "AST must be analyzed first");
 
     var v;
     var mainNode;
