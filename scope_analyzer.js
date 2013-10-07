@@ -259,7 +259,8 @@ var KEYWORDS = [
     "catch",
     "typeof",
     "void",
-    "with"
+    "with",
+    "debugger"
 ];
 
 handler.handlesLanguage = function(language) {
