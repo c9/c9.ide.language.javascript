@@ -733,7 +733,7 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
 var markForLoopDeclare = function(decl, forsSeen) {
     // Get VarDecls([VarDecl(x)...]) parent
     var varDeclsNode = decl.parent.parent.parent;
-    if (["For", "ForIn"].indexOf(varDeclsNode.parent.cons) === -1)
+    if (!varDeclsNode.parent || ["For", "ForIn"].indexOf(varDeclsNode.parent.cons) === -1)
         return false;
     var result = true;
     varDeclsNode.parent.traverseUp(
