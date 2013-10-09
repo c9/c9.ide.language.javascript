@@ -17,12 +17,14 @@ handler.handlesLanguage = function(language) {
 handler.jumpToDefinition = function(doc, fullAst, pos, currentNode, callback) {
     if (!fullAst)
         return callback();
-    scopes.getVariablePositions(doc, fullAst, pos, currentNode, function (data) {
-        if (!data || !data.declarations || data.declarations.length === 0) {
-            return callback(null);
-        }
-        
-        callback(data.declarations);
+    scopes.analyze(doc.getValue(), fullAst, function() {
+        scopes.getVariablePositions(doc, fullAst, pos, currentNode, function (data) {
+            if (!data || !data.declarations || data.declarations.length === 0) {
+                return callback(null);
+            }
+            
+            callback(data.declarations);
+        });
     });
 };
 
