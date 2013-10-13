@@ -16,6 +16,10 @@ handler.handlesLanguage = function(language) {
     return language === 'javascript';
 };
 
+handler.handlesImmediate = function() {
+    return this.HANDLES_BOTH;
+}
+
 handler.parse = function(code, callback) {
     var result;
     try {
