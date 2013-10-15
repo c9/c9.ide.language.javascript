@@ -17,7 +17,7 @@ handler.handlesLanguage = function(language) {
 };
 
 handler.handlesEditor = function() {
-    return this.HANDLES_BOTH;
+    return this.HANDLES_ANY;
 }
 
 handler.parse = function(code, callback) {
