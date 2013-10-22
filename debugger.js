@@ -19,10 +19,11 @@ define(function(require, exports, module) {
     };
         
     // builds an expression for the v8 debugger based on a node
-    expressionBuilder.buildExpression = function(node) {
-        if (!node) return null;
+    expressionBuilder.getInspectExpression = function(doc, fullAst, pos, currentNode, callback) {
+        if (!currentNode) return callback;
         
-        return getExpressionValue(node);
+        
+        callback(getExpressionValue(currentNode));
     };
     
     /*** privates ***/
@@ -32,6 +33,8 @@ define(function(require, exports, module) {
         if (d.value) return d.value;
         
         var result;
+        
+        // TODO: simplify this; we can simply get the string
         
         d.rewrite(
             // var someVar = ...

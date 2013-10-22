@@ -44,8 +44,7 @@ handler.findNode = function(ast, pos, callback) {
 };
 
 handler.getPos = function(node, callback) {
-    var pos = node.getPos();
-    callback({ row: pos.line, column: pos.col });
+    callback(node.getPos());
 };
 
 /* Ready to be enabled to replace Narcissus, when mature
