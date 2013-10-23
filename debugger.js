@@ -23,14 +23,15 @@ define(function(require, exports, module) {
         if (!currentNode) return callback;
         
         
-        callback(getExpressionValue(currentNode));
+        callback(getExpression(currentNode));
     };
     
     /*** privates ***/
     
     // get a string value of any expression
-    var getExpressionValue = function(d) {
-        if (d.value) return d.value;
+    var getExpression = function(d) {
+        if (d.value)
+            return { value: d.value, pos: d.getPos() };
         
         var result;
         
@@ -39,10 +40,12 @@ define(function(require, exports, module) {
         d.rewrite(
             // var someVar = ...
             'VarDeclInit(x, _)', 'ConstDeclInit(x, _)', function(b) {
+                d = b.x;
                 result = b.x.value;
             },
             // var someVar;
             'VarDecl(x)', 'ConstDecl(x)', function(b) {
+                d = b.x;
                 result = b.x.value;
             },
             // e.x
@@ -87,7 +90,7 @@ define(function(require, exports, module) {
                     result = "";
             }
         );
-        return result;
+        return { value: result, pos: d.getPos() };
     };
 
 });
