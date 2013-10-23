@@ -732,9 +732,9 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
  *                   tree and add any for loops we see to this list.
  */
 var markForLoopDeclare = function(decl, forsSeen) {
-    // Get VarDecls([VarDecl(x)...]) parent
+    // Get VarDecls([VarDecl(x)...]) or Function("x", ...) parent
     var varDeclsNode = decl.parent.parent.parent;
-    if (!varDeclsNode.parent || ["For", "ForIn"].indexOf(varDeclsNode.parent.cons) === -1)
+    if (!varDeclsNode || !varDeclsNode.parent || ["For", "ForIn"].indexOf(varDeclsNode.parent.cons) === -1)
         return false;
     var result = true;
     varDeclsNode.parent.traverseUp(
