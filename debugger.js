@@ -50,7 +50,7 @@ define(function(require, exports, module) {
             },
             // e.x
             'PropAccess(e, x)', function(b) {
-                result = getExpressionValue(b.e) + "." + b.x.value;
+                result = getExpression(b.e) + "." + b.x.value;
             },
             // x
             'Var(x)', function(b) {
@@ -58,8 +58,8 @@ define(function(require, exports, module) {
             },
             // e(arg, ...)
             'Call(e, args)', function(b) {
-                var method = getExpressionValue(b.e);
-                var args = b.args.toArray().map(getExpressionValue).join(", ");
+                var method = getExpression(b.e);
+                var args = b.args.toArray().map(getExpression).join(", ");
                 result = method + "(" + args + ")";
             },
             // 10
@@ -68,12 +68,12 @@ define(function(require, exports, module) {
             },
             // e[idx]
             'Index(e, idx)', function(b) {
-                result = getExpressionValue(b.e) + "[" + getExpressionValue(b.idx) + "]";
+                result = getExpression(b.e) + "[" + getExpression(b.idx) + "]";
             },
             // new SomeThing(arg, ...)
             'New(e, args)', function(b) {
-                var method = getExpressionValue(b.e);
-                var args = b.args.toArray().map(getExpressionValue).join(", ");
+                var method = getExpression(b.e);
+                var args = b.args.toArray().map(getExpression).join(", ");
                 result = "new " + method + "(" + args + ")";
             },
             // x (function argument)
@@ -82,7 +82,7 @@ define(function(require, exports, module) {
             },
             // 10 + 4
             'Op(op, e1, e2)', function(b) {
-                result = getExpressionValue(b.e1) + " " + b.op.value + " " + getExpressionValue(b.e2);
+                result = getExpression(b.e1) + " " + b.op.value + " " + getExpression(b.e2);
             },
             // if nuthin' else matches
             function() {
