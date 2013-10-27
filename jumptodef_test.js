@@ -1,14 +1,13 @@
 /*global describe it before disabledFeatures*/
 
-if (typeof process !== "undefined") {
+if (typeof define === "undefined") {
     require("amd-loader");
     require("../../test/setup_paths");
 }
 
 define(function(require, exports, module) {
-    var sinon           = require("sinon");
     var assert          = require("assert");
-    var LanguageWorker  = require('../ext.language/worker').LanguageWorker;
+    var LanguageWorker  = require('../c9.ide.language/worker').LanguageWorker;
     var EventEmitter    = require("ace/lib/event_emitter").EventEmitter;
     
     describe("Jump To Definition", function(){
@@ -32,16 +31,17 @@ define(function(require, exports, module) {
                 });
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/jumptodef");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "var ab = 4; console.log(ab);", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/jumptodef");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "var ab = 4; console.log(ab);", null, "");
         });
         it("test jump to definition on a position without code should still return a result", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
-            var definitionListener = sinon.stub();
+            var definitionListener = function(){definitionListener.callCount += 1};
+            definitionListener.callCount = 0;
             emitter.on("definition", definitionListener);
             emitter.once("markers", function(markers) {
                 worker.jumpToDefinition({
@@ -52,14 +52,14 @@ define(function(require, exports, module) {
                 });
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/jumptodef");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "var ab = 4; console.log(ab);                            ", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/jumptodef");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "var ab = 4; console.log(ab);                            ", null, "");
             
             // definition listener should not be called
-            setTimeout();function () {
-                sinon.assert.callCount(definitionListener, 1);
+            setTimeout(function () {
+                assert.equal(definitionListener.callCount, 1);
                 next();
             }, 500);
         });
@@ -80,10 +80,10 @@ define(function(require, exports, module) {
                 });
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/jumptodef");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "var ab = 4; console.log(ab);", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/jumptodef");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "var ab = 4; console.log(ab);", null, "");
         });
         it("test isJumpToDefinitionAvailable should return false when not available", function(next) {
             disabledFeatures = { jshint: true };
@@ -102,10 +102,12 @@ define(function(require, exports, module) {
                 });
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/jumptodef");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "var ab = 4; console.log(ab);", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/jumptodef");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "var ab = 4; console.log(ab);", null, "");
         });
     });
+    
+    onload && onload();
 });

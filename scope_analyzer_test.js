@@ -1,13 +1,13 @@
 /*global describe it before disabledFeatures*/
 
-if (typeof process !== "undefined") {
+if (typeof define === "undefined") {
     require("amd-loader");
     require("../../test/setup_paths");
 }
 
 define(function(require, exports, module) {
-    var assert         = require("chai").assert;
-    var LanguageWorker = require('../ext.language/worker').LanguageWorker;
+    var assert         = require("lib/chai/chai").assert;
+    var LanguageWorker = require('plugins/c9.ide.language/worker').LanguageWorker;
     var EventEmitter   = require("ace/lib/event_emitter").EventEmitter;
     
     describe("Scope Analyzer", function(){
@@ -23,9 +23,9 @@ define(function(require, exports, module) {
             });
             var worker = new LanguageWorker(emitter);
             worker.$analyzeInterval = {};
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "/*global foo:true*/ foo;", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "/*global foo:true*/ foo;", null, "");
         });
         it("test unused variable", function(next) {
             disabledFeatures = { jshint: true };
@@ -41,10 +41,10 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
             assert.equal(worker.handlers.length, 2);
-            worker.switchFile("test.js", "javascript", "var hello = false;", null, "");
+            worker.switchFile("test.js", false, "javascript", "var hello = false;", null, "");
         });
         it("test unused const", function(next) {
             disabledFeatures = { jshint: true };
@@ -55,10 +55,10 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
             assert.equal(worker.handlers.length, 2);
-            worker.switchFile("test.js", "javascript", "const hello = false;", null, "");
+            worker.switchFile("test.js", false, "javascript", "const hello = false;", null, "");
         });
         it("test unused variable scoped", function(next) {
             disabledFeatures = { jshint: true };
@@ -70,10 +70,10 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
             assert.equal(worker.handlers.length, 2);
-            worker.switchFile("test.js", "javascript", "var hello = false; function noName() { var hello = true; hello = false; }", null, "");
+            worker.switchFile("test.js", false, "javascript", "var hello = false; function noName() { var hello = true; hello = false; }", null, "");
         });
         it("test unused variable scoped without var decl", function(next) {
             disabledFeatures = { jshint: true };
@@ -84,10 +84,10 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
             assert.equal(worker.handlers.length, 2);
-            worker.switchFile("test.js", "javascript", "var hello = false; function noName() { hello = false; }", null, "");
+            worker.switchFile("test.js", false, "javascript", "var hello = false; function noName() { hello = false; }", null, "");
         });
         it("test undeclared variable", function(next) {
             disabledFeatures = { jshint: true };
@@ -99,10 +99,10 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
             assert.equal(worker.handlers.length, 2);
-            worker.switchFile("test.js", "javascript", "hello = false;", null, "");
+            worker.switchFile("test.js", false, "javascript", "hello = false;", null, "");
         });
         it("test undeclared iteration variable", function(next) {
             disabledFeatures = { jshint: true };
@@ -114,9 +114,9 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "for(p in {}) { }", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "for(p in {}) { }", null, "");
         });
         it("test bad this call", function(next) {
             disabledFeatures = { jshint: true };
@@ -127,9 +127,9 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "var accept = function(){}; accept('evt', function(){this});", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "var accept = function(){}; accept('evt', function(){this});", null, "");
         });
         it("test bad this call (2)", function(next) {
             disabledFeatures = { jshint: true };
@@ -140,9 +140,9 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "var accept = function(){}; accept(function(err){this});", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "var accept = function(){}; accept(function(err){this});", null, "");
         });
         it("test bad this call (3)", function(next) {
             disabledFeatures = { jshint: true };
@@ -153,9 +153,9 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "function g(err){this};", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "function g(err){this};", null, "");
         });    
         it("test missing return in err handler", function(next) {
             disabledFeatures = { jshint: true };
@@ -166,9 +166,9 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "function doSomethingElse() { } function helloAsync(callback) {  doSomethingElse(function(err) { if(err) callback(err); }); }", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "function doSomethingElse() { } function helloAsync(callback) {  doSomethingElse(function(err) { if(err) callback(err); }); }", null, "");
         });
         it("test missing return in err handler without using err in call", function(next) {
             disabledFeatures = { jshint: true };
@@ -179,9 +179,9 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "function doSomethingElse() { } doSomethingElse(function(err) { if(err) console.log('sup'); });", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "function doSomethingElse() { } doSomethingElse(function(err) { if(err) console.log('sup'); });", null, "");
         });
         it("test not reporting error when there is a return in err handler", function(next) {
             disabledFeatures = { jshint: true };
@@ -192,9 +192,9 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "function doSomethingElse() { } function helloAsync(callback) {  doSomethingElse(function(err) { if(err) return callback(err); }); }", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "function doSomethingElse() { } function helloAsync(callback) {  doSomethingElse(function(err) { if(err) return callback(err); }); }", null, "");
         });
         it("test be less complainy", function(next) {
             disabledFeatures = { jshint: true };
@@ -205,9 +205,9 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "var foo = true ? false\n: { a : 1\n b : 2}", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "var foo = true ? false\n: { a : 1\n b : 2}", null, "");
         });
         it("test be less complainy 2", function(next) {
             disabledFeatures = { jshint: true };
@@ -218,9 +218,9 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "for(;;) { [].forEach(function() {}) }", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "for(;;) { [].forEach(function() {}) }", null, "");
         });
         it("test be selectively complainy about functions in loops", function(next) {
             disabledFeatures = { jshint: true };
@@ -231,9 +231,9 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "for(;;) { [].bar(function() {}) }", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "for(;;) { [].bar(function() {}) }", null, "");
         });
         it("test complain about functions in 'for in'", function(next) {
             disabledFeatures = { jshint: true };
@@ -244,9 +244,11 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/scope_analyzer");
-            worker.register("ext/jslanguage/parse");
-            worker.switchFile("test.js", "javascript", "for(var x in []) { x.bar(function() {}) }", null, "");
+            worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
+            worker.register("plugins/c9.ide.language.javascript/parse");
+            worker.switchFile("test.js", false, "javascript", "for(var x in []) { x.bar(function() {}) }", null, "");
         });
     });
+    
+    onload && onload();
 });

@@ -1,6 +1,6 @@
 /*global describe it before*/
 
-if (typeof process !== "undefined") {
+if (typeof define === "undefined") {
     require("amd-loader");
     require("../../test/setup_paths");
 }
@@ -17,9 +17,9 @@ define(function(require, exports, module) {
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/parse");
+            worker.register("plugins/c9.ide.language.javascript/parse");
             assert.equal(worker.handlers.length, 1);
-            worker.switchFile("test.js", "javascript", "hello();", null, "");
+            worker.switchFile("test.js", false, "javascript", "hello();", null, "");
             worker.parse(null, function(ast) {
                 assert.equal(ast, '[Call(Var("hello"),[])]');
                 done();
@@ -29,9 +29,9 @@ define(function(require, exports, module) {
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/parse");
+            worker.register("plugins/c9.ide.language.javascript/parse");
             assert.equal(worker.handlers.length, 1);
-            worker.switchFile("test.js", "javascript", "hello(", null, "");
+            worker.switchFile("test.js", false, "javascript", "hello(", null, "");
             worker.parse(null, function(ast) {
                 assert.equal(ast, '[Call(Var("hello"),[])]');
                 done();
@@ -41,13 +41,14 @@ define(function(require, exports, module) {
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/parse");
+            worker.register("plugins/c9.ide.language.javascript/parse");
             assert.equal(worker.handlers.length, 1);
-            worker.switchFile("test.js", "javascript", "console.log\n\n\n\n", null, "");
+            worker.switchFile("test.js", false, "javascript", "console.log\n\n\n\n", null, "");
             worker.parse(null, function(ast) {
                 assert.equal(ast, '[PropAccess(Var("console"),"log")]');
                 done();
             });
         });
     });
+    onload && onload();
 });

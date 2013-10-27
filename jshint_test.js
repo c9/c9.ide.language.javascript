@@ -1,6 +1,6 @@
 /*global describe it before*/
 
-if (typeof process !== "undefined") {
+if (typeof define === "undefined") {
     require("amd-loader");
     require("../../test/setup_paths");
 }
@@ -19,9 +19,10 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/jshint");
-            assert.equal(worker.handlers.length, 1);
-            worker.switchFile("test.js", "javascript", "hello();", null, "");
+            worker.register("plugins/c9.ide.language.javascript/jshint", null, function() {
+                assert.equal(worker.handlers.length, 1);
+            });
+            worker.switchFile("test.js", false, "javascript", "hello();", null, "");
         });
         
         it("test integration JSHint", function(next) {
@@ -34,8 +35,8 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/jshint");
-            worker.switchFile("test.js", "javascript", "console.log(1);\nhello()", null, "");
+            worker.register("plugins/c9.ide.language.javascript/jshint");
+            worker.switchFile("test.js", false, "javascript", "console.log(1);\nhello()", null, "");
         });
         
         it("test JSHint output filtering", function(next) {
@@ -47,8 +48,8 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/jshint");
-            worker.switchFile("no-errors.js", "javascript", "var foo = function() {};\nfoo && foo();", null, "");
+            worker.register("plugins/c9.ide.language.javascript/jshint");
+            worker.switchFile("no-errors.js", false, "javascript", "var foo = function() {};\nfoo && foo();", null, "");
         });
         
         it("test JSHint const support", function(next) {
@@ -60,8 +61,8 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/jshint");
-            worker.switchFile("no-errors.js", "javascript", "const foo = 1;", null, "");
+            worker.register("plugins/c9.ide.language.javascript/jshint");
+            worker.switchFile("no-errors.js", false, "javascript", "const foo = 1;", null, "");
         });
         
         it("test JSHint globals", function(next) {
@@ -73,8 +74,10 @@ define(function(require, exports, module) {
                 next();
             });
             var worker = new LanguageWorker(emitter);
-            worker.register("ext/jslanguage/jshint");
-            worker.switchFile("no-errors.js", "javascript", "/*global foo:true*/ foo;", null, "");
+            worker.register("plugins/c9.ide.language.javascript/jshint");
+            worker.switchFile("no-errors.js", false, "javascript", "/*global foo:true*/ foo;", null, "");
         });
     });
+    
+    onload && onload();
 });
