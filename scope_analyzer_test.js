@@ -1,4 +1,4 @@
-/*global describe it before disabledFeatures*/
+/*global describe it before disabledFeatures:true*/
 
 if (typeof define === "undefined") {
     require("amd-loader");
