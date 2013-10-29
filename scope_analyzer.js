@@ -745,7 +745,7 @@ var markForLoopDeclare = function(decl, forsSeen) {
         }
     );
     return result;
-}
+};
 
 /**
  * Determine if any callbacks in the current call
