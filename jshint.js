@@ -7,6 +7,7 @@
 define(function(require, exports, module) {
 
 var baseLanguageHandler = require('plugins/c9.ide.language/base_handler');
+var workerUtil = require('plugins/c9.ide.language/worker_util');
 var lint = require("ace/mode/javascript/jshint").JSHINT;
 var handler = module.exports = Object.create(baseLanguageHandler);
 
@@ -25,7 +26,7 @@ handler.analyze = function(value, ast, callback) {
 
 handler.analyzeSync = function(value, ast) {
     var markers = [];
-    if (!this.isFeatureEnabled("jshint"))
+    if (!workerUtil.isFeatureEnabled("jshint"))
         return markers;
 
     value = value.replace(/^(#!.*\n)/, "//$1");
@@ -98,7 +99,7 @@ handler.analyzeSync = function(value, ast) {
  * like / * global foo: true * /
  */
 handler.getGlobals = function() {
-    if (!lint.errors || !this.isFeatureEnabled("jshint"))
+    if (!lint.errors || !workerUtil.isFeatureEnabled("jshint"))
         return {};
     var array = lint.data().globals;
     if (!array) // no data (yet?)
