@@ -802,7 +802,10 @@ handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, ca
     if (!currentNode)
         return callback();
     
-    assert(fullAst.annos.scope, "AST must be analyzed first");
+    if (!fullAst.annos.scope) {
+        console.error("[highlightOccurrences] Warning: AST must be analyzed first");
+        callback();
+    }
 
     var markers = [];
     var enableRefactorings = [];
