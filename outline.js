@@ -26,7 +26,7 @@ outlineHandler.handlesLanguage = function(language) {
 outlineHandler.outline = function(doc, ast, callback) {
     if (!ast)
         return callback();
-    callback({ body : outlineSync(doc, ast) });
+    callback({ items : outlineSync(doc, ast) });
 };
     
 function fargsToString(fargs) {
