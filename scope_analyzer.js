@@ -623,7 +623,8 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                  */
                 'If(Var("err"), Call(fn, args), None())', function(b, node) {
                     // Check if the `err` variable is used somewhere in the function arguments.
-                    if(b.args.collectTopDown('Var("err")').length > 0)
+                    if (b.args.collectTopDown('Var("err")').length > 0 &&
+                        !b.fn.isMatch('PropAccess(Var("console"), _)'))
                         markers.push({
                             pos: b.fn.getPos(),
                             type: 'warning',
