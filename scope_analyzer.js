@@ -16,7 +16,6 @@ define(function(require, exports, module) {
 
 var baseLanguageHandler = require('plugins/c9.ide.language/base_handler');
 var completeUtil = require("plugins/c9.ide.language/complete_util");
-var workerUtil = require("plugins/c9.ide.language/worker_util");
 var handler = module.exports = Object.create(baseLanguageHandler);
 var outline = require("plugins/c9.ide.language.javascript/outline");
 var jshint = require("plugins/c9.ide.language.javascript/jshint");
@@ -509,7 +508,7 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                 },
                 'Assign(Var(x), e)', function(b, node) {
                     if (!scope.isDeclared(b.x.value)) {
-                        if (workerUtil.isFeatureEnabled("undeclaredVars") && !jshintGlobals[b.x.value]) {
+                        if (handler.isFeatureEnabled("undeclaredVars") && !jshintGlobals[b.x.value]) {
                             markers.push({
                                 pos: node[0].getPos(),
                                 level: 'warning',
@@ -526,7 +525,7 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                     return node;
                 },
                 'ForIn(Var(x), e, stats)', function(b) {
-                    if (workerUtil.isFeatureEnabled("undeclaredVars") &&
+                    if (handler.isFeatureEnabled("undeclaredVars") &&
                         !scope.isDeclared(b.x.value) && !jshintGlobals[b.x.value]) {
                         markers.push({
                             pos: this.getPos(),
@@ -561,7 +560,7 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                     node.setAnnotation("scope", scope);
                     if(scope.isDeclared(b.x.value)) {
                         scope.get(b.x.value).addUse(node);
-                    } else if(workerUtil.isFeatureEnabled("undeclaredVars") &&
+                    } else if(handler.isFeatureEnabled("undeclaredVars") &&
                         !GLOBALS[b.x.value] && !jshintGlobals[b.x.value]) {
                         if (b.x.value === "self") {
                             markers.push({
@@ -600,7 +599,7 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                     b.fargs.forEach(function(farg) {
                         farg.setAnnotation("scope", newScope);
                         var v = newScope.declare(farg[0].value, farg);
-                        if (workerUtil.isFeatureEnabled("unusedFunctionArgs"))
+                        if (handler.isFeatureEnabled("unusedFunctionArgs"))
                             mustUseVars.push(v);
                     });
                     var inBody = inCallback === IN_CALLBACK_DEF ? IN_CALLBACK_BODY : isCallback(node);
@@ -624,7 +623,8 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                  */
                 'If(Var("err"), Call(fn, args), None())', function(b, node) {
                     // Check if the `err` variable is used somewhere in the function arguments.
-                    if(b.args.collectTopDown('Var("err")').length > 0)
+                    if (b.args.collectTopDown('Var("err")').length > 0 &&
+                        !b.fn.isMatch('PropAccess(Var("console"), _)'))
                         markers.push({
                             pos: b.fn.getPos(),
                             type: 'warning',
@@ -710,7 +710,7 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
 
     var jshintMarkers = [];
     var jshintGlobals = {};
-    if (workerUtil.isFeatureEnabled("jshint") && !minimalAnalysis) {
+    if (handler.isFeatureEnabled("jshint") && !minimalAnalysis) {
         jshintMarkers = jshint.analyzeSync(value, ast);
         jshintGlobals = jshint.getGlobals();
     }
@@ -859,7 +859,7 @@ handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, ca
         }
     );
     
-    if (!workerUtil.isFeatureEnabled("instanceHighlight"))
+    if (!this.isFeatureEnabled("instanceHighlight"))
         return callback({ enableRefactorings: enableRefactorings });
 
     callback({
