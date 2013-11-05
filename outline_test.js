@@ -1,6 +1,6 @@
 /*global describe it before*/
 
-"use mocha";
+"use client";
 
 if (typeof define === "undefined") {
     require("amd-loader");
