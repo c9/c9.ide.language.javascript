@@ -1,5 +1,7 @@
 /*global describe it before disabledFeatures*/
 
+"use client";
+
 if (typeof define === "undefined") {
     require("amd-loader");
     require("../../test/setup_paths");
