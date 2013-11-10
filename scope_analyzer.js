@@ -803,8 +803,9 @@ handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, ca
         return callback();
     
     if (!fullAst.annos.scope) {
-        console.error("[highlightOccurrences] Warning: AST must be analyzed first");
-        callback();
+        return handler.analyze(doc.getValue(), fullAst, function() {
+            handler.highlightOccurrences(doc, fullAst, cursorPos, currentNode, callback);
+        }, true);
     }
 
     var markers = [];
