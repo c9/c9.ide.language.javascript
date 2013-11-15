@@ -837,26 +837,26 @@ handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, ca
             highlightVariable(v);
             // Let's not enable renaming 'this' and only rename declared variables
             if (b.x.value !== "this" && v)
-                enableRefactorings.push("renameVariable");
+                enableRefactorings.push("rename");
         },
         'VarDeclInit(x, _)', 'ConstDeclInit(x, _)', function(b) {
             highlightVariable(this.getAnnotation("scope").get(b.x.value));
-            enableRefactorings.push("renameVariable");
+            enableRefactorings.push("rename");
         },
         'VarDecl(x)', 'ConstDecl(x)', function(b) {
             highlightVariable(this.getAnnotation("scope").get(b.x.value));
-            enableRefactorings.push("renameVariable");
+            enableRefactorings.push("rename");
         },
         'FArg(x)', function(b) {
             highlightVariable(this.getAnnotation("scope").get(b.x.value));
-            enableRefactorings.push("renameVariable");
+            enableRefactorings.push("rename");
         },
         'Function(x, _, _)', function(b, node) {
             // Only for named functions
             if (!b.x.value || !node.getAnnotation("scope"))
                 return;
             highlightVariable(node.getAnnotation("scope").get(b.x.value));
-            enableRefactorings.push("renameVariable");
+            enableRefactorings.push("rename");
         }
     );
     
