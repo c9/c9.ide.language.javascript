@@ -18,7 +18,7 @@ handler.jumpToDefinition = function(doc, fullAst, pos, currentNode, callback) {
     if (!fullAst)
         return callback();
     scopes.analyze(doc.getValue(), fullAst, function() {
-        scopes.getVariablePositions(doc, fullAst, pos, currentNode, function (data) {
+        scopes.getRenamePositions(doc, fullAst, pos, currentNode, function (data) {
             if (!data || !data.declarations || data.declarations.length === 0) {
                 return callback(null);
             }
