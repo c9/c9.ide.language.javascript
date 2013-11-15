@@ -869,11 +869,15 @@ handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, ca
     });
 };
 
-handler.getVariablePositions = function(doc, fullAst, cursorPos, currentNode, callback) {
+handler.getRenamePositions = function(doc, fullAst, cursorPos, currentNode, callback) {
     if (!fullAst)
         return callback();
     
-    assert(fullAst.annos.scope, "AST must be analyzed first");
+    if (!fullAst.annos.scope) {
+        return handler.analyze(doc.getValue(), fullAst, function() {
+            handler.getRenamePositions(doc, fullAst, cursorPos, currentNode, callback);
+        }, true);
+    }
 
     var v;
     var mainNode;
