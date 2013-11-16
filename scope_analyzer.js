@@ -798,6 +798,7 @@ var isCallback = function(node) {
     return result;
 };
 
+handler.getRefactorings =
 handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, callback) {
     if (!currentNode)
         return callback();
@@ -865,7 +866,7 @@ handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, ca
 
     callback({
         markers: markers,
-        enableRefactorings: enableRefactorings
+        refactorings: enableRefactorings
     });
 };
 
