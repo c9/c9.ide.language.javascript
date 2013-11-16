@@ -22,7 +22,6 @@ define(function(require, exports, module) {
     expressionBuilder.getInspectExpression = function(doc, fullAst, pos, currentNode, callback) {
         if (!currentNode) return callback;
         
-        
         callback(getExpression(currentNode));
     };
     
