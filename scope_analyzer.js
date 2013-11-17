@@ -860,9 +860,6 @@ handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, ca
             enableRefactorings.push("rename");
         }
     );
-    
-    if (!this.isFeatureEnabled("instanceHighlight"))
-        return callback({ enableRefactorings: enableRefactorings });
 
     callback({
         markers: markers,
