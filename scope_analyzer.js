@@ -20,7 +20,7 @@ var handler = module.exports = Object.create(baseLanguageHandler);
 var outline = require("plugins/c9.ide.language.javascript/outline");
 var jshint = require("plugins/c9.ide.language.javascript/jshint");
 var JSResolver = require('plugins/c9.ide.language.javascript/JSResolver').JSResolver;
-var assert = require("plugins/c9.util/assert");
+var assert = require("c9/assert");
 require("treehugger/traverse"); // add traversal functions to trees
 
 var CALLBACK_METHODS = ["forEach", "map", "reduce", "filter", "every", "some"];
