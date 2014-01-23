@@ -11,10 +11,13 @@ var workerUtil = require('plugins/c9.ide.language/worker_util');
 var lint = require("ace/mode/javascript/jshint").JSHINT;
 var handler = module.exports = Object.create(baseLanguageHandler);
 
-var disabledJSHintWarnings = [/Missing radix parameter./,
+var disabledJSHintWarnings = [
+    /Missing radix parameter./,
     /Bad for in variable '(.+)'./,
     /use strict/,
-    /Input is an empty string./];
+    /Input is an empty string./,
+    /better written in dot notation/
+];
 
 handler.handlesLanguage = function(language) {
     return language === 'javascript';
@@ -30,7 +33,7 @@ handler.analyzeSync = function(value, ast) {
         return markers;
 
     value = value.replace(/^(#!.*\n)/, "//$1");
-    // jshint throws error when called on empty string
+    // avoid jshint throwing when called on empty string
     if (!value)
         return markers;
 
