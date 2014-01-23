@@ -773,8 +773,6 @@ var isCallbackCall = function(node) {
  * (IN_CALLBACK_BODY_MAYBE). Or, none at all (0).
  */
 var isCallback = function(node) {
-    if (!node.parent.parent.isMatch)
-        console.log("isCallback debug:", JSON.stringify(node.parent.parent));
     if (!node.parent || !node.parent.parent 
         || !node.parent.parent.isMatch('Call(_, _)')
         || node.parent.isMatch('PropAccess(_, "call")')
