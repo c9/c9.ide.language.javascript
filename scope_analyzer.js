@@ -777,7 +777,7 @@ var isCallback = function(node) {
     var parentParent = parent && parent.parent;
     if (!parentParent)
         return false;
-     if (!parentParent.isMatch)
+    if (!parentParent.isMatch)
         console.log("isCallback debug:", JSON.stringify(parentParent));
     if (parent.isMatch('PropAccess(_, "call")')
         || parent.isMatch('PropAccess(_, "apply")')
