@@ -15,7 +15,7 @@ handler.handlesLanguage = function(language) {
 };
 
 handler.jumpToDefinition = function(doc, fullAst, pos, currentNode, callback) {
-    if (!fullAst)
+    if (!fullAst || !currentNode)
         return callback();
     scopes.analyze(doc.getValue(), fullAst, function() {
         scopes.getRenamePositions(doc, fullAst, pos, currentNode, function (data) {
