@@ -773,15 +773,20 @@ var isCallbackCall = function(node) {
  * (IN_CALLBACK_BODY_MAYBE). Or, none at all (0).
  */
 var isCallback = function(node) {
-    if (!node.parent || !node.parent.parent 
-        || !node.parent.parent.isMatch('Call(_, _)')
-        || node.parent.isMatch('PropAccess(_, "call")')
-        || node.parent.isMatch('PropAccess(_, "apply")')
-        || node.parent.isMatch('PropAccess(_, "bind")')
-        || (node.parent.parent.cons === "Call" &&
-            node.parent.parent[0].cons === "PropAccess" &&
-            node.parent.parent[1].length > 1 &&
-            CALLBACK_METHODS.indexOf(node.parent.parent[0][1].value) > -1)
+    var parent = node.parent;
+    var parentParent = parent && parent.parent;
+    if (!parentParent)
+        return false;
+     if (!parentParent.isMatch)
+        console.log("isCallback debug:", JSON.stringify(parentParent));
+    if (parent.isMatch('PropAccess(_, "call")')
+        || parent.isMatch('PropAccess(_, "apply")')
+        || parent.isMatch('PropAccess(_, "bind")')
+        || !parentParent.isMatch('Call(_, _)')
+        || (parentParent.cons === "Call" &&
+            parentParent[0].cons === "PropAccess" &&
+            parentParent[1].length > 1 &&
+            CALLBACK_METHODS.indexOf(parentParent[0][1].value) > -1)
         )
         return false;
     var result = 0;
