@@ -23,7 +23,8 @@ var JSResolver = require('plugins/c9.ide.language.javascript/JSResolver').JSReso
 var assert = require("c9/assert");
 require("treehugger/traverse"); // add traversal functions to trees
 
-var CALLBACK_METHODS = ["forEach", "map", "reduce", "filter", "every", "some"];
+var CALLBACK_METHODS = ["forEach", "map", "reduce", "filter", "every", "some",
+    "__defineGetter__", , "__defineSetter__"];
 var CALLBACK_FUNCTIONS = ["require", "setTimeout", "setInterval"];
 var PROPER = module.exports.PROPER = 80;
 var MAYBE_PROPER = module.exports.MAYBE_PROPER = 1;
