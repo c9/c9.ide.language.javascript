@@ -20,7 +20,7 @@ define(function(require, exports, module) {
         
     // builds an expression for the v8 debugger based on a node
     expressionBuilder.getInspectExpression = function(doc, fullAst, pos, currentNode, callback) {
-        if (!currentNode) return callback;
+        if (!currentNode) return callback();
         
         callback(getExpression(currentNode));
     };
