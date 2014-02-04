@@ -44,7 +44,7 @@ function expressionToName(node) {
     var name;
     node.rewrite(
         'Var(x)', function(b) { name = b.x.value; },
-        'PropAccess(e, x)', function(b) { name = b.x.value; },
+        'PropAccess(e, x)', function(b) { name = (b.e.cons === "Var" ? b.e[0].value + "." : "") +  b.x.value; },
         'Index(e, x)', function(b) {
             var parent = (b.e[1] || b.e[0]).value || "";
             if (b.x[0])
@@ -141,9 +141,10 @@ var outlineSync = outlineHandler.outlineSync = function(doc, node, includeProps)
             var eventHandler = tryExtractEventHandler(this);
             if (!eventHandler)
                 return false;
+            var object = b.e.rewrite("PropAccess(Var(x), _)", function(b) { return b.x.value; });
             results.push({
                 icon: 'event',
-                name: eventHandler.s[0].value,
+                name: (object ? object + "." : "") + eventHandler.s[0].value,
                 pos: this.getPos(),
                 displayPos: eventHandler.s.getPos(),
                 items: eventHandler.body && outlineSync(doc, eventHandler.body, includeProps)
