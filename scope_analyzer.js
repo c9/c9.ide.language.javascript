@@ -563,6 +563,8 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                         scope.get(b.x.value).addUse(node);
                     } else if(handler.isFeatureEnabled("undeclaredVars") &&
                         !GLOBALS[b.x.value] && !jshintGlobals[b.x.value]) {
+                        if (b.x.value === "✖")
+                            return;
                         if (b.x.value === "self") {
                             markers.push({
                                 pos: this.getPos(),
