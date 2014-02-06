@@ -780,8 +780,12 @@ var isCallback = function(node) {
     var parentParent = parent && parent.parent;
     if (!parentParent)
         return false;
-    if (!parentParent.isMatch)
-        console.log("isCallback debug:", JSON.stringify(parentParent));
+    try {
+        if (!parentParent.isMatch)
+            console.log("isCallback debug:", JSON.stringify(parentParent));
+    } catch (e) {
+        // Cannot print circular JSON in server-side tests
+    }
     if (parent.isMatch('PropAccess(_, "call")')
         || parent.isMatch('PropAccess(_, "apply")')
         || parent.isMatch('PropAccess(_, "bind")')
