@@ -16,7 +16,8 @@ var disabledJSHintWarnings = [
     /Bad for in variable '(.+)'./,
     /use strict/,
     /Input is an empty string./,
-    /better written in dot notation/
+    /better written in dot notation/,
+    /use !== to compare with null/
 ];
 
 handler.handlesLanguage = function(language) {
