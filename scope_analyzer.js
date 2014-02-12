@@ -400,9 +400,12 @@ handler.getIdentifierRegex = function() {
 };
 
 handler.complete = function(doc, fullAst, pos, currentNode, callback) {
+    if (!currentNode || currentNode.cons === "Var")
+        return callback();
+
     var line = doc.getLine(pos.row);
     var identifier = completeUtil.retrievePrecedingIdentifier(line, pos.column, handler.$getIdentifierRegex());
-
+    
     var matches = completeUtil.findCompletions(identifier, SCOPE_ARRAY);
     callback(matches.map(function(m) {
         return {
