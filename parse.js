@@ -49,7 +49,7 @@ handler.getPos = function(node, callback) {
 
 handler.getMaxFileSizeSupported = function() {
     // More than our conservative default
-    return 2000000;
+    return 1000 * 1000;
 };
 
 /* Ready to be enabled to replace Narcissus, when mature
