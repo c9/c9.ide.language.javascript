@@ -25,7 +25,7 @@ handler.jumpToDefinition = function(doc, fullAst, pos, currentNode, callback) {
             
             callback(data.declarations);
         });
-    });
+    }, true);
 };
 
 });
