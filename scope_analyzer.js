@@ -770,7 +770,7 @@ var isCallbackCall = function(node) {
                 result = true;
         }
     );
-    return result || outline.tryExtractEventHandler(node, true);
+    return result;
 };
 
 /**
