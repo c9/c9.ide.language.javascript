@@ -55,12 +55,6 @@ define(function(require, exports, module) {
             'Var(x)', function(b) {
                 result = b.x.value;
             },
-            // e(arg, ...)
-            'Call(e, args)', function(b) {
-                var method = getExpression(b.e);
-                var args = b.args.toArray().map(getExpression).join(", ");
-                result = method + "(" + args + ")";
-            },
             // 10
             'Num(n)', function(b) {
                 result = b.n.value;
@@ -89,6 +83,10 @@ define(function(require, exports, module) {
                     result = "";
             }
         );
+        
+        if (result === "")
+            return;
+        
         return { value: result, pos: d.getPos() };
     };
 
