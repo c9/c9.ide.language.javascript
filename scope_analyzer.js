@@ -51,189 +51,189 @@ var GLOBALS = {
     "null"                   : true,
     "arguments"              : true,
     "Infinity"               : true,
-    onmessage                : true,
-    postMessage              : true,
-    importScripts            : true,
+    onmessage: true,
+    postMessage: true,
+    importScripts: true,
     "continue"               : true,
     "return"                 : true,
     "else"                   : true,
     // Browser
-    ArrayBuffer              : true,
-    Attr                     : true,
-    Audio                    : true,
-    addEventListener         : true,
-    applicationCache         : true,
-    blur                     : true,
-    clearInterval            : true,
-    clearTimeout             : true,
-    close                    : true,
-    closed                   : true,
-    DataView                 : true,
-    defaultStatus            : true,
-    document                 : true,
-    event                    : true,
-    FileReader               : true,
+    ArrayBuffer: true,
+    Attr: true,
+    Audio: true,
+    addEventListener: true,
+    applicationCache: true,
+    blur: true,
+    clearInterval: true,
+    clearTimeout: true,
+    close: true,
+    closed: true,
+    DataView: true,
+    defaultStatus: true,
+    document: true,
+    event: true,
+    FileReader: true,
     Float32Array             : true,
     Float64Array             : true,
-    FormData                 : true,
-    getComputedStyle         : true,
-    CDATASection             : true,
-    HTMLElement              : true,
-    HTMLAnchorElement        : true,
-    HTMLBaseElement          : true,
-    HTMLBlockquoteElement    : true,
-    HTMLBodyElement          : true,
-    HTMLBRElement            : true,
-    HTMLButtonElement        : true,
-    HTMLCanvasElement        : true,
-    HTMLDirectoryElement     : true,
-    HTMLDivElement           : true,
-    HTMLDListElement         : true,
-    HTMLFieldSetElement      : true,
-    HTMLFontElement          : true,
-    HTMLFormElement          : true,
-    HTMLFrameElement         : true,
-    HTMLFrameSetElement      : true,
-    HTMLHeadElement          : true,
-    HTMLHeadingElement       : true,
-    HTMLHRElement            : true,
-    HTMLHtmlElement          : true,
-    HTMLIFrameElement        : true,
-    HTMLImageElement         : true,
-    HTMLInputElement         : true,
-    HTMLIsIndexElement       : true,
-    HTMLLabelElement         : true,
-    HTMLLayerElement         : true,
-    HTMLLegendElement        : true,
-    HTMLLIElement            : true,
-    HTMLLinkElement          : true,
-    HTMLMapElement           : true,
-    HTMLMenuElement          : true,
-    HTMLMetaElement          : true,
-    HTMLModElement           : true,
-    HTMLObjectElement        : true,
-    HTMLOListElement         : true,
-    HTMLOptGroupElement      : true,
-    HTMLOptionElement        : true,
-    HTMLParagraphElement     : true,
-    HTMLParamElement         : true,
-    HTMLPreElement           : true,
-    HTMLQuoteElement         : true,
-    HTMLScriptElement        : true,
-    HTMLSelectElement        : true,
-    HTMLStyleElement         : true,
-    HTMLTableCaptionElement  : true,
-    HTMLTableCellElement     : true,
-    HTMLTableColElement      : true,
-    HTMLTableElement         : true,
-    HTMLTableRowElement      : true,
-    HTMLTableSectionElement  : true,
-    HTMLTextAreaElement      : true,
-    HTMLTitleElement         : true,
-    HTMLUListElement         : true,
-    HTMLVideoElement         : true,
+    FormData: true,
+    getComputedStyle: true,
+    CDATASection: true,
+    HTMLElement: true,
+    HTMLAnchorElement: true,
+    HTMLBaseElement: true,
+    HTMLBlockquoteElement: true,
+    HTMLBodyElement: true,
+    HTMLBRElement: true,
+    HTMLButtonElement: true,
+    HTMLCanvasElement: true,
+    HTMLDirectoryElement: true,
+    HTMLDivElement: true,
+    HTMLDListElement: true,
+    HTMLFieldSetElement: true,
+    HTMLFontElement: true,
+    HTMLFormElement: true,
+    HTMLFrameElement: true,
+    HTMLFrameSetElement: true,
+    HTMLHeadElement: true,
+    HTMLHeadingElement: true,
+    HTMLHRElement: true,
+    HTMLHtmlElement: true,
+    HTMLIFrameElement: true,
+    HTMLImageElement: true,
+    HTMLInputElement: true,
+    HTMLIsIndexElement: true,
+    HTMLLabelElement: true,
+    HTMLLayerElement: true,
+    HTMLLegendElement: true,
+    HTMLLIElement: true,
+    HTMLLinkElement: true,
+    HTMLMapElement: true,
+    HTMLMenuElement: true,
+    HTMLMetaElement: true,
+    HTMLModElement: true,
+    HTMLObjectElement: true,
+    HTMLOListElement: true,
+    HTMLOptGroupElement: true,
+    HTMLOptionElement: true,
+    HTMLParagraphElement: true,
+    HTMLParamElement: true,
+    HTMLPreElement: true,
+    HTMLQuoteElement: true,
+    HTMLScriptElement: true,
+    HTMLSelectElement: true,
+    HTMLStyleElement: true,
+    HTMLTableCaptionElement: true,
+    HTMLTableCellElement: true,
+    HTMLTableColElement: true,
+    HTMLTableElement: true,
+    HTMLTableRowElement: true,
+    HTMLTableSectionElement: true,
+    HTMLTextAreaElement: true,
+    HTMLTitleElement: true,
+    HTMLUListElement: true,
+    HTMLVideoElement: true,
     Int16Array               : true,
     Int32Array               : true,
     Int8Array                : true,
-    Image                    : true,
-    localStorage             : true,
-    location                 : true,
-    navigator                : true,
-    open                     : true,
-    openDatabase             : true,
-    Option                   : true,
-    parent                   : true,
-    print                    : true,
-    removeEventListener      : true,
-    resizeBy                 : true,
-    resizeTo                 : true,
-    screen                   : true,
-    scroll                   : true,
-    scrollBy                 : true,
-    scrollTo                 : true,
-    sessionStorage           : true,
-    setInterval              : true,
-    setTimeout               : true,
-    SharedWorker             : true,
+    Image: true,
+    localStorage: true,
+    location: true,
+    navigator: true,
+    open: true,
+    openDatabase: true,
+    Option: true,
+    parent: true,
+    print: true,
+    removeEventListener: true,
+    resizeBy: true,
+    resizeTo: true,
+    screen: true,
+    scroll: true,
+    scrollBy: true,
+    scrollTo: true,
+    sessionStorage: true,
+    setInterval: true,
+    setTimeout: true,
+    SharedWorker: true,
     Uint16Array              : true,
     Uint32Array              : true,
     Uint8Array               : true,
-    WebSocket                : true,
-    window                   : true,
-    Worker                   : true,
-    XMLHttpRequest           : true,
-    XPathEvaluator           : true,
-    XPathException           : true,
-    XPathExpression          : true,
-    XPathNamespace           : true,
-    XPathNSResolver          : true,
-    XPathResult              : true,
+    WebSocket: true,
+    window: true,
+    Worker: true,
+    XMLHttpRequest: true,
+    XPathEvaluator: true,
+    XPathException: true,
+    XPathExpression: true,
+    XPathNamespace: true,
+    XPathNSResolver: true,
+    XPathResult: true,
     // Devel
-    alert                    : true,
-    confirm                  : true,
-    console                  : true,
-    prompt                   : true,
+    alert: true,
+    confirm: true,
+    console: true,
+    prompt: true,
     // Frameworks
-    jQuery                   : true,
+    jQuery: true,
     "$"                      : true,
     "$$"                     : true,
-    goog                     : true,
-    dojo                     : true,
-    dojox                    : true,
-    dijit                    : true,
-    apf                      : true,
-    Document                 : true,
-    Element                  : true,
-    Event                    : true,
-    KeyboardEvent            : true,
-    MooTools                 : true,
-    Window                   : true,
-    Ajax                     : true,
-    Field                    : true,
-    Scriptaculous            : true,
+    goog: true,
+    dojo: true,
+    dojox: true,
+    dijit: true,
+    apf: true,
+    Document: true,
+    Element: true,
+    Event: true,
+    KeyboardEvent: true,
+    MooTools: true,
+    Window: true,
+    Ajax: true,
+    Field: true,
+    Scriptaculous: true,
     // require.js
-    define                   : true,
+    define: true,
     // node.js
-    __filename               : true,
-    __dirname                : true,
-    Buffer                   : true,
-    exports                  : true,
-    GLOBAL                   : true,
-    global                   : true,
-    module                   : true,
-    process                  : true,
-    require                  : true,
+    __filename: true,
+    __dirname: true,
+    Buffer: true,
+    exports: true,
+    GLOBAL: true,
+    global: true,
+    module: true,
+    process: true,
+    require: true,
     // Standard
-    Array                    : true,
-    Boolean                  : true,
-    Date                     : true,
-    decodeURI                : true,
-    decodeURIComponent       : true,
-    encodeURI                : true,
-    encodeURIComponent       : true,
-    Error                    : true,
+    Array: true,
+    Boolean: true,
+    Date: true,
+    decodeURI: true,
+    decodeURIComponent: true,
+    encodeURI: true,
+    encodeURIComponent: true,
+    Error: true,
     'eval'                   : true,
-    EvalError                : true,
-    Function                 : true,
-    hasOwnProperty           : true,
-    isFinite                 : true,
-    isNaN                    : true,
-    JSON                     : true,
-    Math                     : true,
-    Number                   : true,
-    Object                   : true,
-    parseInt                 : true,
-    parseFloat               : true,
-    RangeError               : true,
-    ReferenceError           : true,
-    RegExp                   : true,
-    String                   : true,
-    SyntaxError              : true,
-    TypeError                : true,
-    URIError                 : true,
+    EvalError: true,
+    Function: true,
+    hasOwnProperty: true,
+    isFinite: true,
+    isNaN: true,
+    JSON: true,
+    Math: true,
+    Number: true,
+    Object: true,
+    parseInt: true,
+    parseFloat: true,
+    RangeError: true,
+    ReferenceError: true,
+    RegExp: true,
+    String: true,
+    SyntaxError: true,
+    TypeError: true,
+    URIError: true,
     // non-standard
-    escape                   : true,
-    unescape                 : true
+    escape: true,
+    unescape: true
 };
 
 var KEYWORDS = [
@@ -268,14 +268,14 @@ handler.handlesLanguage = function(language) {
     return language === 'javascript';
 };
  
-handler.getResolutions = function(value, ast, markers, callback){
+handler.getResolutions = function(value, ast, markers, callback) {
     var resolver = new JSResolver(value, ast);
     resolver.addResolutions(markers);
     callback(markers);
 };
 
 handler.hasResolution = function(value, ast, marker) {
-    if (marker.resolutions && marker.resolutions.length){
+    if (marker.resolutions && marker.resolutions.length) {
         return true;
     }
     var resolver = new JSResolver(value, ast);
@@ -286,7 +286,7 @@ var scopeId = 0;
 
 var Variable = module.exports.Variable = function Variable(declaration) {
     this.declarations = [];
-    if(declaration)
+    if (declaration)
         this.declarations.push(declaration);
     this.uses = [];
     this.values = [];
@@ -366,9 +366,9 @@ Scope.prototype.isDeclared = function(name) {
  */
 Scope.prototype.get = function(name, kind) {
     var vars = this.getVars(kind);
-    if(vars['_'+name])
+    if (vars['_'+name])
         return vars['_'+name];
-    else if(this.parent)
+    else if (this.parent)
         return this.parent.get(name, kind);
 };
 
@@ -409,12 +409,12 @@ handler.complete = function(doc, fullAst, pos, currentNode, callback) {
     var matches = completeUtil.findCompletions(identifier, SCOPE_ARRAY);
     callback(matches.map(function(m) {
         return {
-          name        : m,
-          replaceText : m,
-          icon        : null,
-          meta        : "EcmaScript",
-          priority    : 0,
-          isGeneric   : true
+          name: m,
+          replaceText: m,
+          icon: null,
+          meta: "EcmaScript",
+          priority: 0,
+          isGeneric: true
         };
     }));
 };
@@ -449,7 +449,7 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
             // function bla(farg) { }
             'Function(x, _, _)', function(b, node) {
                 node.setAnnotation("scope", scope);
-                if(b.x.value) {
+                if (b.x.value) {
                     scope.declare(b.x.value, b.x, PROPER);
                 }
                 return node;
@@ -562,9 +562,9 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                 },
                 'Var(x)', function(b, node) {
                     node.setAnnotation("scope", scope);
-                    if(scope.isDeclared(b.x.value)) {
+                    if (scope.isDeclared(b.x.value)) {
                         scope.get(b.x.value).addUse(node);
-                    } else if(handler.isFeatureEnabled("undeclaredVars") &&
+                    } else if (handler.isFeatureEnabled("undeclaredVars") &&
                         !GLOBALS[b.x.value] && !jshintGlobals[b.x.value]) {
                         if (b.x.value === "✖")
                             return;
@@ -623,9 +623,9 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                 },
                 /*
                  * Catches errors like these:
-                 * if(err) callback(err);
+                 * if (err) callback(err);
                  * which in 99% of cases is wrong: a return should be added:
-                 * if(err) return callback(err);
+                 * if (err) return callback(err);
                  */
                 'If(Var("err"), Call(fn, args), None())', function(b, node) {
                     // Check if the `err` variable is used somewhere in the function arguments.
@@ -695,7 +695,7 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
             );
         }
         analyze(scope, node, inCallback, inLoop);
-        if(!parentLocalVars) {
+        if (!parentLocalVars) {
             for (var i = 0; i < mustUseVars.length; i++) {
                 if (mustUseVars[i].uses.length === 0) {
                     var v = mustUseVars[i];
@@ -831,7 +831,7 @@ handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, ca
         if (!v)
             return;
         v.declarations.forEach(function(decl) {
-            if(decl.getPos())
+            if (decl.getPos())
                 markers.push({
                     pos: decl.getPos(),
                     type: 'occurrence_main'
@@ -908,7 +908,7 @@ handler.getRenamePositions = function(doc, fullAst, cursorPos, currentNode, call
             mainNode = node;
         },
         'Function(x, _, _)', function(b, node) {
-            if(!b.x.value)
+            if (!b.x.value)
                 return;
             v = node.getAnnotation("scope").get(b.x.value);
             mainNode = b.x;
@@ -933,14 +933,14 @@ handler.getRenamePositions = function(doc, fullAst, cursorPos, currentNode, call
     
     // if the annotation cant be found we will skip this to avoid null ref errors
     v && v.declarations.forEach(function(node) {
-         if(node !== currentNode[0]) {
+         if (node !== currentNode[0]) {
             var pos = node.getPos();
             declarations.push({column: pos.sc, row: pos.sl});
         }
     });
     
     v && v.uses.forEach(function(node) {
-        if(node !== currentNode) {
+        if (node !== currentNode) {
             var pos = node.getPos();
             uses.push({column: pos.sc, row: pos.sl});
         }

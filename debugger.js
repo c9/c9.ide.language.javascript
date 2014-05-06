@@ -79,7 +79,7 @@ define(function(require, exports, module) {
             },
             // if nuthin' else matches
             function() {
-                if(!result)
+                if (!result)
                     result = "";
             }
         );

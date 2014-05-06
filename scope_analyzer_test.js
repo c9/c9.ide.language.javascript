@@ -8,9 +8,9 @@ if (typeof define === "undefined") {
 }
 
 define(function(require, exports, module) {
-    var assert         = require("lib/chai/chai").assert;
+    var assert = require("lib/chai/chai").assert;
     var LanguageWorker = require('plugins/c9.ide.language/worker').LanguageWorker;
-    var EventEmitter   = require("ace/lib/event_emitter").EventEmitter;
+    var EventEmitter = require("ace/lib/event_emitter").EventEmitter;
     
     describe("Scope Analyzer", function(){
         this.timeout(1000000);
@@ -170,7 +170,7 @@ define(function(require, exports, module) {
             var worker = new LanguageWorker(emitter);
             worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
             worker.register("plugins/c9.ide.language.javascript/parse");
-            worker.switchFile("test.js", false, "javascript", "function doSomethingElse() { } function helloAsync(callback) {  doSomethingElse(function(err) { if(err) callback(err); }); }", null, "");
+            worker.switchFile("test.js", false, "javascript", "function doSomethingElse() { } function helloAsync(callback) {  doSomethingElse(function(err) { if (err) callback(err); }); }", null, "");
         });
         it("test missing return in err handler without using err in call", function(next) {
             disabledFeatures = { jshint: true };
@@ -183,7 +183,7 @@ define(function(require, exports, module) {
             var worker = new LanguageWorker(emitter);
             worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
             worker.register("plugins/c9.ide.language.javascript/parse");
-            worker.switchFile("test.js", false, "javascript", "function doSomethingElse() { } doSomethingElse(function(err) { if(err) console.log('sup'); });", null, "");
+            worker.switchFile("test.js", false, "javascript", "function doSomethingElse() { } doSomethingElse(function(err) { if (err) console.log('sup'); });", null, "");
         });
         it("test not reporting error when there is a return in err handler", function(next) {
             disabledFeatures = { jshint: true };
@@ -196,7 +196,7 @@ define(function(require, exports, module) {
             var worker = new LanguageWorker(emitter);
             worker.register("plugins/c9.ide.language.javascript/scope_analyzer");
             worker.register("plugins/c9.ide.language.javascript/parse");
-            worker.switchFile("test.js", false, "javascript", "function doSomethingElse() { } function helloAsync(callback) {  doSomethingElse(function(err) { if(err) return callback(err); }); }", null, "");
+            worker.switchFile("test.js", false, "javascript", "function doSomethingElse() { } function helloAsync(callback) {  doSomethingElse(function(err) { if (err) return callback(err); }); }", null, "");
         });
         it("test be less complainy", function(next) {
             disabledFeatures = { jshint: true };

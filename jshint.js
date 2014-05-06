@@ -83,7 +83,7 @@ handler.analyzeSync = function(value, ast) {
             warning.reason = "Assignment in conditional expression";
         }
         for (var i = 0; i < disabledJSHintWarnings.length; i++)
-            if(disabledJSHintWarnings[i].test(warning.reason))
+            if (disabledJSHintWarnings[i].test(warning.reason))
                 return;
         markers.push({
             pos: { // TODO quickfix framework needs el/ec in order to be able to select the issue in the editor

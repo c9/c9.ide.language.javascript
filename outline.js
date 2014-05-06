@@ -11,12 +11,12 @@ var EVENT_REGEX = /[a-zA-Z_0-9\$\_\ \(\)\[\]\/@]/;
 
 var NOT_EVENT_HANDLERS = {
     addMarker: true,
-    traverseUp : true,
-    traverse : true,
-    topdown : true,
-    traverseTopDown : true,
-    rewrite : true,
-    traverseAll : true
+    traverseUp: true,
+    traverse: true,
+    topdown: true,
+    traverseTopDown: true,
+    rewrite: true,
+    traverseAll: true
 };
 
 outlineHandler.handlesLanguage = function(language) {
@@ -34,7 +34,7 @@ function fargsToString(fargs) {
     for (var i = 0; i < fargs.length; i++) {
         str += fargs[i][0].value + ', ';
     }
-    if(fargs.length > 0)
+    if (fargs.length > 0)
         str = str.substring(0, str.length - 2);
     str += ')';
     return str;
@@ -62,7 +62,7 @@ var outlineSync = outlineHandler.outlineSync = function(doc, node, includeProps)
         // e.x = function(...) { ... }  -> name is x
         'Assign(e, Function(name, fargs, body))', function(b) {
             var name = expressionToName(b.e);
-            if(!name) return false;
+            if (!name) return false;
             results.push({
                 icon: 'method',
                 name: name + fargsToString(b.fargs),
@@ -156,7 +156,7 @@ var outlineSync = outlineHandler.outlineSync = function(doc, node, includeProps)
         // setTimeout(function() { ... }, 200) -> name is setTimeout [callback]
         'Call(e, args)', function(b) {
             var name = expressionToName(b.e);
-            if(!name) return false;
+            if (!name) return false;
             var foundFunction = false;
             b.args.each(
                 'Function(name, fargs, body)', function(b) {

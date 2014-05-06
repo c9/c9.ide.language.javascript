@@ -8,9 +8,9 @@ if (typeof define === "undefined") {
 }
 
 define(function(require, exports, module) {
-    var assert         = require("ace/test/assertions");
+    var assert = require("ace/test/assertions");
     var LanguageWorker = require('plugins/c9.ide.language/worker').LanguageWorker;
-    var EventEmitter   = require("ace/lib/event_emitter").EventEmitter;
+    var EventEmitter = require("ace/lib/event_emitter").EventEmitter;
     
     describe("JSHint", function(){
         it("test integration base case", function(next) {

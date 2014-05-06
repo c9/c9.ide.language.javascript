@@ -4,15 +4,15 @@ define(function(require, exports, module) {
   var markerResolution = require('plugins/c9.ide.language/MarkerResolution').MarkerResolution;
   var Range = require("ace/range").Range;
 
-  var JSResolver = function(value, ast){
-    this.addResolutions = function(markers){
+  var JSResolver = function(value, ast) {
+    this.addResolutions = function(markers) {
       var _self = this;
       markers.forEach(function(curMarker) {
         curMarker.resolutions = _self.getResolutions(curMarker);
       });
     };
     
-    this.getResolutions = function(marker){
+    this.getResolutions = function(marker) {
       var type = this.getType(marker);
       if (type) {
         if (typeof this[type] === 'function'){
@@ -22,9 +22,9 @@ define(function(require, exports, module) {
       return [];
     }; 
 
-    this.getType = function(marker){
+    this.getType = function(marker) {
         var msg = marker.message;
-        if (msg.indexOf("Missing semicolon") !== -1){
+        if (msg.indexOf("Missing semicolon") !== -1) {
             return "missingSemicolon";
         }
         else if (msg.indexOf("Unnecessary semicolon") !== -1) {
@@ -44,7 +44,7 @@ define(function(require, exports, module) {
         var preview = "<b>Add semicolon</b><p>" + before + "<b>; </b>" + after + "</p>";
         
         var insert = ";";
-        if (after.length){
+        if (after.length) {
             insert += " ";
         }
 

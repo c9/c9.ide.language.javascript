@@ -16,9 +16,9 @@ function outlineSync(handler, document, node) {
 }
 
 define(function(require, exports, module) {
-    var handler  = require("./outline");
-    var parser   = require("treehugger/js/parse");
-    var assert   = require("ace/test/assertions");
+    var handler = require("./outline");
+    var parser = require("treehugger/js/parse");
+    var assert = require("ace/test/assertions");
     var Document = require("ace/document").Document;
     
     //var microtime = require("microtime");

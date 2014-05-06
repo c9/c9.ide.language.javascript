@@ -12,22 +12,22 @@ function simpleFunctionNested(a, b) {
     
     someFunction.bla = function() {
         this.foo = {
-            a : function () {
+            a: function () {
                 
             },
-            b : function gbk() {
+            b: function gbk() {
                 
             },
             c: {
-                a : function () {
+                a: function () {
                     
                 },
-                b : function gbk() {
+                b: function gbk() {
                     
                 },
                 x: 1
             },
-            d : 1
+            d: 1
         }
         this.on(  "listen"  , function() {
         
