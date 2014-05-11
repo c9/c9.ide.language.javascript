@@ -66,11 +66,11 @@ handler.analyzeSync = function(value, ast) {
             return;
         var type = "warning";
         var reason = warning.reason;
-        if (reason.indexOf("Expected") !== -1 && reason.indexOf("instead saw") !== -1) // Parse error!
-            type = "error";
-        if (reason.indexOf("Unclosed string") === 0) // Parse error!
-            type = "error";
-        if (reason.indexOf("begun comment") !== -1) // Stupidly formulated parse error!
+        var parseError = 
+            reason.indexOf("Expected") !== -1 && reason.indexOf("instead saw") !== -1
+            || reason.indexOf("Unclosed string") === 0
+            || reason.indexOf("begun comment") !== -1;
+        if (parseError)
             type = "error";
         if (reason.indexOf("Missing semicolon") !== -1 || reason.indexOf("Unnecessary semicolon") !== -1)
             type = "info";
@@ -86,9 +86,10 @@ handler.analyzeSync = function(value, ast) {
             if (disabledJSHintWarnings[i].test(warning.reason))
                 return;
         markers.push({
-            pos: { // TODO quickfix framework needs el/ec in order to be able to select the issue in the editor
+            pos: {
                 sl: warning.line-1,
-                sc: warning.character-1
+                sc: warning.character-1,
+                ec: parseError && warning.character-1,
             },
             type: type,
             level: type,
