@@ -702,8 +702,10 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                     v.declarations.forEach(function(decl) {
                         if (decl.value && decl.value === decl.value.toUpperCase())
                             return;
+                        var pos = decl.getPos();
+                        pos.sc = pos.ec = 0; // don't show marker underline
                         markers.push({
-                            pos: decl.getPos(),
+                            pos: pos,
                             type: 'info',
                             level: 'info',
                             message: 'Unused variable.'
