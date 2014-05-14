@@ -703,7 +703,6 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                         if (decl.value && decl.value === decl.value.toUpperCase())
                             return;
                         var pos = decl.getPos();
-                        pos.sc = pos.ec = 0; // don't show marker underline
                         markers.push({
                             pos: pos,
                             type: 'info',
