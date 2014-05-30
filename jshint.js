@@ -17,7 +17,7 @@ var disabledJSHintWarnings = [
     /use strict/,
     /Input is an empty string./,
     /better written in dot notation/,
-    /use !== to compare with null/
+    /Use '!==' to compare with 'null'/
 ];
 
 handler.handlesLanguage = function(language) {
