@@ -30,7 +30,7 @@ handler.analyze = function(value, ast, callback) {
 
 handler.analyzeSync = function(value, ast) {
     var markers = [];
-    if (!workerUtil.isFeatureEnabled("jshint"))
+    if (!workerUtil.isFeatureEnabled("hints"))
         return markers;
 
     value = value.replace(/^(#!.*\n)/, "//$1");
