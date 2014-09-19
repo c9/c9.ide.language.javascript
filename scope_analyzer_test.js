@@ -12,6 +12,9 @@ define(function(require, exports, module) {
     var LanguageWorker = require('plugins/c9.ide.language/worker').LanguageWorker;
     var EventEmitter = require("ace/lib/event_emitter").EventEmitter;
     
+    require("plugins/c9.ide.language.javascript/scope_analyzer");
+    require("plugins/c9.ide.language.javascript/parse");
+    
     describe("Scope Analyzer", function(){
         this.timeout(1000000);
         

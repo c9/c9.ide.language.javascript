@@ -23,8 +23,8 @@ define(function(require, exports, module) {
             var worker = new LanguageWorker(emitter);
             worker.register("plugins/c9.ide.language.javascript/jshint", null, function() {
                 assert.equal(worker.handlers.length, 1);
+                worker.switchFile("test.js", false, "javascript", "hello();", null, "");
             });
-            worker.switchFile("test.js", false, "javascript", "hello();", null, "");
         });
         
         it("test integration JSHint", function(next) {
