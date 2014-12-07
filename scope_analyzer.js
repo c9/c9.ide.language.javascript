@@ -233,7 +233,35 @@ var GLOBALS = {
     URIError: true,
     // non-standard
     escape: true,
-    unescape: true
+    unescape: true,
+    // meteor
+    Match: true,
+    MeteorSubscribeHandle: true,
+    Accounts: true,
+    Blaze: true,
+    DDP: true,
+    EJSON: true,
+    Meteor: true,
+    Mongo: true,
+    Tracker: true,
+    Assets: true,
+    App: true,
+    Plugin: true,
+    Package: true,
+    Npm: true,
+    Cordova: true,
+    currentUser: true,
+    loggingIn: true,
+    Template: true,
+    MethodInvocation: true,
+    Subscription: true,
+    CompileStep: true,
+    check: true,
+    Email: true,
+    HTTP: true,
+    ReactiveVar: true,
+    Session: true,
+    PackageAPI: true,
 };
 
 var KEYWORDS = [
