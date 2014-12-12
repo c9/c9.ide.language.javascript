@@ -15,7 +15,6 @@ define(function(require, exports, module) {
         language.registerLanguageHandler('plugins/c9.ide.language.javascript/parse');
         language.registerLanguageHandler('plugins/c9.ide.language.javascript/scope_analyzer');
         
-        // indirectly invoked by scope_analyzer: 'plugins/c9.ide.language.javascript/jshint'
         language.registerLanguageHandler('plugins/c9.ide.language.javascript/debugger');
         language.registerLanguageHandler('plugins/c9.ide.language.javascript/outline');
         language.registerLanguageHandler('plugins/c9.ide.language.javascript/jumptodef');

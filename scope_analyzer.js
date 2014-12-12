@@ -18,7 +18,7 @@ var baseLanguageHandler = require('plugins/c9.ide.language/base_handler');
 var completeUtil = require("plugins/c9.ide.language/complete_util");
 var handler = module.exports = Object.create(baseLanguageHandler);
 var outline = require("plugins/c9.ide.language.javascript/outline");
-var jshint = require("plugins/c9.ide.language.javascript/jshint");
+// var jshint = require("plugins/c9.ide.language.javascript/jshint");
 var JSResolver = require('plugins/c9.ide.language.javascript/JSResolver').JSResolver;
 var assert = require("c9/assert");
 require("treehugger/traverse"); // add traversal functions to trees
@@ -542,7 +542,7 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                 },
                 'Assign(Var(x), e)', function(b, node) {
                     if (!scope.isDeclared(b.x.value)) {
-                        if (handler.isFeatureEnabled("undeclaredVars") && !jshintGlobals[b.x.value]) {
+                        if (handler.isFeatureEnabled("undeclaredVars")) {
                             markers.push({
                                 pos: node[0].getPos(),
                                 level: 'warning',
@@ -560,7 +560,7 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                 },
                 'ForIn(Var(x), e, stats)', function(b) {
                     if (handler.isFeatureEnabled("undeclaredVars") &&
-                        !scope.isDeclared(b.x.value) && !jshintGlobals[b.x.value]) {
+                        !scope.isDeclared(b.x.value)) {
                         markers.push({
                             pos: this.getPos(),
                             level: 'warning',
@@ -595,7 +595,7 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                     if (scope.isDeclared(b.x.value)) {
                         scope.get(b.x.value).addUse(node);
                     } else if (handler.isFeatureEnabled("undeclaredVars") &&
-                        !GLOBALS[b.x.value] && !jshintGlobals[b.x.value]) {
+                        !GLOBALS[b.x.value]) {
                         if (b.x.value === "✖")
                             return;
                         if (b.x.value === "self") {
@@ -744,6 +744,14 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
             }
         }
     }
+    
+    // Markers of scope_analyzer are disabled for now; we use eslint instead
+    // TODO: clean up scope_analyzer
+    if (ast) {
+        var rootScope = new Scope();
+        scopeAnalyzer(rootScope, ast);
+    }
+    return callback();
 
     var jshintMarkers = [];
     var jshintGlobals = {};
