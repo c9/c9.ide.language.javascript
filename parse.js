@@ -27,11 +27,16 @@ handler.parse = function(code, callback) {
         result = parser.parse(code);
         traverse.addParentPointers(result);
     } catch (e) {
-        // Ignore any *fatal* parse errors; JSHint will report them
+        // Ignore any *fatal* parse errors; eslint will report them
         result = null;
     }
     
     callback(result);
+};
+
+handler.getMaxFileSizeSupported = function() {
+    // .25 of current base_handler default
+    return .25 * 10 * 1000 * 80;
 };
 
 handler.isParsingSupported = function() {

@@ -302,6 +302,11 @@ handler.getResolutions = function(value, ast, markers, callback) {
     callback(markers);
 };
 
+handler.getMaxFileSizeSupported = function() {
+    // .25 of current base_handler default
+    return .25 * 10 * 1000 * 80;
+};
+
 handler.hasResolution = function(value, ast, marker) {
     if (marker.resolutions && marker.resolutions.length) {
         return true;
