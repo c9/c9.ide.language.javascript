@@ -757,20 +757,6 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
         scopeAnalyzer(rootScope, ast);
     }
     return callback();
-
-    var jshintMarkers = [];
-    var jshintGlobals = {};
-    if (handler.isFeatureEnabled("jshint") && !minimalAnalysis) {
-        jshintMarkers = jshint.analyzeSync(value, ast);
-        jshintGlobals = jshint.getGlobals();
-    }
-
-    if (ast) {
-        var rootScope = new Scope();
-        scopeAnalyzer(rootScope, ast);
-    }
-
-    callback(markers.concat(jshintMarkers));
 };
 
 /**
