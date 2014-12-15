@@ -11,7 +11,7 @@ var handler = module.exports = Object.create(baseLanguageHandler);
 var scopes = require("plugins/c9.ide.language.javascript/scope_analyzer");
 
 handler.handlesLanguage = function(language) {
-    return language === 'javascript';
+    return language === "javascript" || language === "jsx";
 };
 
 handler.jumpToDefinition = function(doc, fullAst, pos, currentNode, callback) {

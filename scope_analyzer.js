@@ -293,7 +293,9 @@ var KEYWORDS = [
 ];
 
 handler.handlesLanguage = function(language) {
-    return language === 'javascript';
+    // Note that we don't really support jsx here,
+    // but rather tolerate it...
+    return language === "javascript" || language === "jsx";
 };
  
 handler.getResolutions = function(value, ast, markers, callback) {

@@ -15,7 +15,7 @@ define(function(require, exports, module) {
     /*** publics ***/
     
     expressionBuilder.handlesLanguage = function(language) {
-        return language === 'javascript';
+        return language === "javascript" || language === "jsx";
     };
         
     // builds an expression for the v8 debugger based on a node

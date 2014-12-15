@@ -20,7 +20,9 @@ var NOT_EVENT_HANDLERS = {
 };
 
 outlineHandler.handlesLanguage = function(language) {
-    return language === 'javascript';
+    // Note: until we have a proper jsx parser,
+    // we'll let jsonalyzer's outline handle jsx files
+    return language === "javascript";
 };
     
 outlineHandler.outline = function(doc, ast, callback) {
