@@ -32,7 +32,11 @@ define(function(require, exports, module) {
             worker.register("plugins/c9.ide.language.javascript/parse");
             worker.switchFile("test.js", false, "javascript", "/*global foo:true*/ foo;", null, "");
         });
-        it("test unused variable", function(next) {
+
+        // Note: many tests are disabled since some analysis features
+        // were disabled when c9.ide.language.javascript.tern was added
+
+        it.skip("test unused variable", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -51,7 +55,7 @@ define(function(require, exports, module) {
             assert.equal(worker.handlers.length, 2);
             worker.switchFile("test.js", false, "javascript", "var hello = false;", null, "");
         });
-        it("test unused const", function(next) {
+        it.skip("test unused const", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -65,7 +69,7 @@ define(function(require, exports, module) {
             assert.equal(worker.handlers.length, 2);
             worker.switchFile("test.js", false, "javascript", "const hello = false;", null, "");
         });
-        it("test unused variable scoped", function(next) {
+        it.skip("test unused variable scoped", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -80,7 +84,7 @@ define(function(require, exports, module) {
             assert.equal(worker.handlers.length, 2);
             worker.switchFile("test.js", false, "javascript", "var hello = false; function noName() { var hello = true; hello = false; }", null, "");
         });
-        it("test unused variable scoped without var decl", function(next) {
+        it.skip("test unused variable scoped without var decl", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -94,7 +98,7 @@ define(function(require, exports, module) {
             assert.equal(worker.handlers.length, 2);
             worker.switchFile("test.js", false, "javascript", "var hello = false; function noName() { hello = false; }", null, "");
         });
-        it("test undeclared variable", function(next) {
+        it.skip("test undeclared variable", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -109,7 +113,7 @@ define(function(require, exports, module) {
             assert.equal(worker.handlers.length, 2);
             worker.switchFile("test.js", false, "javascript", "hello = false;", null, "");
         });
-        it("test undeclared iteration variable", function(next) {
+        it.skip("test undeclared iteration variable", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -123,7 +127,7 @@ define(function(require, exports, module) {
             worker.register("plugins/c9.ide.language.javascript/parse");
             worker.switchFile("test.js", false, "javascript", "for(p in {}) { }", null, "");
         });
-        it("test bad this call", function(next) {
+        it.skip("test bad this call", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -136,7 +140,7 @@ define(function(require, exports, module) {
             worker.register("plugins/c9.ide.language.javascript/parse");
             worker.switchFile("test.js", false, "javascript", "var accept = function(){}; accept('evt', function(){this});", null, "");
         });
-        it("test bad this call (2)", function(next) {
+        it.skip("test bad this call (2)", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -149,7 +153,7 @@ define(function(require, exports, module) {
             worker.register("plugins/c9.ide.language.javascript/parse");
             worker.switchFile("test.js", false, "javascript", "var accept = function(){}; accept(function(err){this});", null, "");
         });
-        it("test bad this call (3)", function(next) {
+        it.skip("test bad this call (3)", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -162,7 +166,7 @@ define(function(require, exports, module) {
             worker.register("plugins/c9.ide.language.javascript/parse");
             worker.switchFile("test.js", false, "javascript", "function g(err){this};", null, "");
         });    
-        it("test missing return in err handler", function(next) {
+        it.skip("test missing return in err handler", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -175,7 +179,7 @@ define(function(require, exports, module) {
             worker.register("plugins/c9.ide.language.javascript/parse");
             worker.switchFile("test.js", false, "javascript", "function doSomethingElse() { } function helloAsync(callback) {  doSomethingElse(function(err) { if (err) callback(err); }); }", null, "");
         });
-        it("test missing return in err handler without using err in call", function(next) {
+        it.skip("test missing return in err handler without using err in call", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -188,7 +192,7 @@ define(function(require, exports, module) {
             worker.register("plugins/c9.ide.language.javascript/parse");
             worker.switchFile("test.js", false, "javascript", "function doSomethingElse() { } doSomethingElse(function(err) { if (err) console.log('sup'); });", null, "");
         });
-        it("test not reporting error when there is a return in err handler", function(next) {
+        it.skip("test not reporting error when there is a return in err handler", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -201,7 +205,7 @@ define(function(require, exports, module) {
             worker.register("plugins/c9.ide.language.javascript/parse");
             worker.switchFile("test.js", false, "javascript", "function doSomethingElse() { } function helloAsync(callback) {  doSomethingElse(function(err) { if (err) return callback(err); }); }", null, "");
         });
-        it("test be less complainy", function(next) {
+        it.skip("test be less complainy", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -214,7 +218,7 @@ define(function(require, exports, module) {
             worker.register("plugins/c9.ide.language.javascript/parse");
             worker.switchFile("test.js", false, "javascript", "var foo = true ? false\n: { a : 1\n b : 2}", null, "");
         });
-        it("test be less complainy 2", function(next) {
+        it.skip("test be less complainy 2", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -227,7 +231,7 @@ define(function(require, exports, module) {
             worker.register("plugins/c9.ide.language.javascript/parse");
             worker.switchFile("test.js", false, "javascript", "for(;;) { [].forEach(function() {}) }", null, "");
         });
-        it("test be selectively complainy about functions in loops", function(next) {
+        it.skip("test be selectively complainy about functions in loops", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
@@ -240,7 +244,7 @@ define(function(require, exports, module) {
             worker.register("plugins/c9.ide.language.javascript/parse");
             worker.switchFile("test.js", false, "javascript", "for(;;) { [].bar(function() {}) }", null, "");
         });
-        it("test complain about functions in 'for in'", function(next) {
+        it.skip("test complain about functions in 'for in'", function(next) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
