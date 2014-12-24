@@ -292,6 +292,8 @@ var KEYWORDS = [
     "debugger"
 ];
 
+handler.GLOBALS = GLOBALS;
+
 handler.handlesLanguage = function(language) {
     // Note that we don't really support jsx here,
     // but rather tolerate it...
