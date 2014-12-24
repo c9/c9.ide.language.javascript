@@ -434,7 +434,6 @@ handler.getIdentifierRegex = function() {
     return (/[a-zA-Z_0-9\$\/]/);
 };
 
-/* UNDONE: tern will now handle local variable completions
 handler.complete = function(doc, fullAst, pos, currentNode, callback) {
     if (!currentNode || currentNode.cons === "Var")
         return callback();
@@ -454,7 +453,6 @@ handler.complete = function(doc, fullAst, pos, currentNode, callback) {
         };
     }));
 };
-*/
 
 /**
  * @param minimalAnalysis  Only analyse bare basics, don't investigate errors.
