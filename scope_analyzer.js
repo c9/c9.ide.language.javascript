@@ -545,6 +545,17 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                     scopeAnalyzer(newScope, b.body, null, inBody);
                     return node;
                 },
+                'Arrow(fargs, body)', function(b, node) {
+                    var newScope = new Scope(scope);
+                    node.setAnnotation("localScope", newScope);
+                    newScope.declare("this");
+                    b.fargs.forEach(function(farg) {
+                        farg.setAnnotation("scope", newScope);
+                        newScope.declare(farg[0].value, farg);
+                    });
+                    scopeAnalyzer(newScope, b.body, null, inCallback);
+                    return node;
+                },
                 'Catch(x, body)', function(b, node) {
                     var oldVar = scope.get(b.x.value);
                     // Temporarily override
