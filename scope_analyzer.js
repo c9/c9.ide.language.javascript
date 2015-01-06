@@ -486,6 +486,12 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                     scope.declare(b.x.value, b.x, PROPER);
                 }
                 return node;
+            },
+            'ImportDecl(_, x)', 'ImportBatchDecl(x)', function(b, node) {
+                if (b.x.cons !== "Var")
+                    return node
+                scope.declare(b.x[0].value, b.x[0], PROPER);
+                return node;
             }
         );
     }
@@ -523,6 +529,9 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                     }
                 },
                 */
+                'ImportDecl(_, x)', 'ImportBatchDecl(x)', function(b, node) {
+                    return node;
+                },
                 'Var(x)', function(b, node) {
                     node.setAnnotation("scope", scope);
                     if (scope.isDeclared(b.x.value)) {
@@ -619,7 +628,7 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                     analyze(scope, b.e3, inCallback);
                     return node;
                 },
-                'ForIn(e1, e2, body)', function(b) {
+                'ForIn(e1, e2, body)', 'ForOf(e1, e2, body)', function(b) {
                     analyze(scope, b.e2, inCallback);
                     analyze(scope, b.e1, inCallback);
                     analyze(scope, b.body, inCallback);
