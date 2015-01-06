@@ -495,6 +495,14 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
         node.setAnnotation("scope", scope);
         function analyze(scope, node, inCallback) {
             node.traverseTopDown(
+                'Assign(Var(x), e)', function(b, node) {		
+                    if (scope.isDeclared(b.x.value)) {
+                        node[0].setAnnotation("scope", scope);		
+                        scope.get(b.x.value).addUse(node[0]);		
+                    }		
+                    analyze(scope, b.e, inCallback);		
+                    return node;		
+                },
                 /*
                 'Var("this")', function(b, node) {
                     if (inCallback === IN_CALLBACK_BODY) {
@@ -517,7 +525,10 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
                 */
                 'Var(x)', function(b, node) {
                     node.setAnnotation("scope", scope);
-                    if (b.x.value === "self"
+                    if (scope.isDeclared(b.x.value)) {
+                        scope.get(b.x.value).addUse(node);
+                    }
+                    else if (b.x.value === "self"
                         && !scope.isDeclared(b.x.value)
                         && handler.isFeatureEnabled("undeclaredVars")) {
                         markers.push({
