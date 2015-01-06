@@ -775,7 +775,7 @@ handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, ca
 };
 
 handler.getRenamePositions = function(doc, fullAst, cursorPos, currentNode, callback) {
-    if (!fullAst)
+    if (!fullAst || !currentNode)
         return callback();
     
     if (!fullAst.annos.scope) {
