@@ -489,7 +489,7 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
             },
             'ImportDecl(_, x)', 'ImportBatchDecl(x)', function(b, node) {
                 if (b.x.cons !== "Var")
-                    return node
+                    return node;
                 scope.declare(b.x[0].value, b.x[0], PROPER);
                 return node;
             }
@@ -642,9 +642,103 @@ handler.analyze = function(value, ast, callback, minimalAnalysis) {
     if (ast) {
         var rootScope = new Scope();
         scopeAnalyzer(rootScope, ast);
+        addDefineWarnings(ast, markers);
     }
     return callback(markers);
 };
+
+function addDefineWarnings(ast, markers) {
+    var isArchitect;
+    var outerStrictNode;
+    ast.forEach(function(node) {
+        node.rewrite(
+            'String("use strict")', function(b, node) {
+                outerStrictNode = node;
+            },
+            'Call(Var("define"), [Function(_, _, body)])', function(b, node) {
+                b.body.forEach(function(node) {
+                    if (outerStrictNode) {
+                        markers.push({
+                            pos: outerStrictNode.getPos(),
+                            type: 'warning',
+                            level: 'warning',
+                            message: '"use strict" outside define()'
+                        });
+                    }
+
+                    node.rewrite(
+                        'Assign(PropAccess(Var("main"), "provides"),_)', function(b, node) {
+                            isArchitect = true;
+                        },
+                        'Function("main", _, body)', function(b, node) {
+                            if (!isArchitect)
+                                return;
+                            addCloud9PluginWarnings(b.body, markers);
+                        }
+                    );
+                });
+            }
+        );
+    });
+}
+
+function addCloud9PluginWarnings(body, markers) {
+    var isCoreSource = /plugins\/c9\./.test(handler.path);
+    var pluginVars = {};
+    var unloadFunction;
+
+    body.forEach(function(node) {
+        node.rewrite(
+            'VarDecls(vars)', function(b, node) {
+                node.traverseTopDown(
+                    'VarDecl(x)', 'LetDecl(x)',
+                    'VarDeclInit(x, _)', 'LetDeclInit(x, _)',
+                    function(b, node) {
+                        pluginVars[b.x.value] = node;
+                    }
+                )
+            },
+            'Call(PropAccess(Var("plugin"), "on"), [String("unload"), Function(_, _, fn)])', function(b, node) {
+                unloadFunction = b.fn;
+            }
+        );
+    });
+    if (!unloadFunction) {
+        if (pluginVars.plugin) {
+            markers.push({
+                pos: pluginVars.plugin.getPos(),
+                type: isCoreSource ? "info" : "warning",
+                message:
+                    isCoreSource
+                        ? "No plugin.on(\"unload\", function() {}) found"
+                        : "Missing plugin.on(\"unload\", function() {})"
+            });
+        }
+        return;
+    }
+
+    var mustUninitVars = {};
+    body.traverseTopDown(
+        'Assign(Var(x), _)', 'Call(Var(x), "push", _)', function(b, node) {
+            if (pluginVars[b.x.value])
+                mustUninitVars[b.x.value] = pluginVars[b.x.value];
+        }
+    );
+    
+    unloadFunction.traverseTopDown(
+        'Var(x)', function(b, node) {
+            delete mustUninitVars[b.x.value];
+        }
+    );
+
+    for (var v in mustUninitVars) {
+        markers.push({
+            pos: mustUninitVars[v].getPos(),
+            type: isCoreSource ? "info" : "warning",
+            message: "Please uninit/reset '" + v + "' in unload function on line " + unloadFunction.getPos().sl
+        });
+    }
+}
 
 /**
  * Determine if any callbacks in the current call
