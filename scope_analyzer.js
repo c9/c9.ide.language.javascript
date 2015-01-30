@@ -686,6 +686,8 @@ function addCloud9PluginWarnings(body, markers) {
     var isCoreSource = /plugins\/c9\./.test(handler.path);
     var pluginVars = {};
     var unloadFunction;
+    var unloadReference;
+    var maybeUnloadFunction;
 
     body.forEach(function(node) {
         node.rewrite(
@@ -700,11 +702,22 @@ function addCloud9PluginWarnings(body, markers) {
             },
             'Call(PropAccess(Var("plugin"), "on"), [String("unload"), Function(_, _, fn)])', function(b, node) {
                 unloadFunction = b.fn;
+            },
+            'Call(PropAccess(Var("plugin"), "on"), [String("unload"), ref])', function(b, node) {
+                unloadReference = b.ref;
+            },
+            'Function("unload", _, fn)', function(b, node) {
+                maybeUnloadFunction = b.fn;
             }
         );
     });
+
+    if (!unloadFunction && unloadReference && maybeUnloadFunction
+        && unloadReference[0] && unloadReference[0].value === "unload")
+        unloadFunction = maybeUnloadFunction;
+
     if (!unloadFunction) {
-        if (pluginVars.plugin) {
+        if (pluginVars.plugin && !unloadReference) {
             markers.push({
                 pos: pluginVars.plugin.getPos(),
                 type: isCoreSource ? "info" : "warning",
@@ -732,10 +745,12 @@ function addCloud9PluginWarnings(body, markers) {
     );
 
     for (var v in mustUninitVars) {
+        if (v === v.toUpperCase())
+            continue;
         markers.push({
             pos: mustUninitVars[v].getPos(),
             type: isCoreSource ? "info" : "warning",
-            message: "Please uninit/reset '" + v + "' in unload function on line " + unloadFunction.getPos().sl
+            message: "Please uninit/reset '" + v + "' in plugin unload function"
         });
     }
 }
