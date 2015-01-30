@@ -692,13 +692,15 @@ function addCloud9PluginWarnings(body, markers) {
     body.forEach(function(node) {
         node.rewrite(
             'VarDecls(vars)', function(b, node) {
-                node.traverseTopDown(
-                    'VarDecl(x)', 'LetDecl(x)',
-                    'VarDeclInit(x, _)', 'LetDeclInit(x, _)',
-                    function(b, node) {
-                        pluginVars[b.x.value] = node;
-                    }
-                )
+                b.vars.forEach(function(v) {
+                    v.rewrite(
+                        'VarDecl(x)', 'LetDecl(x)',
+                        'VarDeclInit(x, _)', 'LetDeclInit(x, _)',
+                        function(b, node) {
+                            pluginVars[b.x.value] = node;
+                        }
+                    )
+                });
             },
             'Call(PropAccess(Var("plugin"), "on"), [String("unload"), Function(_, _, fn)])', function(b, node) {
                 unloadFunction = b.fn;
