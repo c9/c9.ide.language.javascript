@@ -9,14 +9,12 @@
         "url": "http://github.com/c9/c9.ide.language.javascript.git"
     },
     "plugins": {
-        "plugin": {
-            "javascript": {}
-        }
+        "javascript": {}
     },
     "categories": [
         "core"
     ],
     "licenses": [
-        ""
+        "AGPL"
     ]
 }
