@@ -10,7 +10,6 @@
  * @depend ext/jslanguage/parse
  *
  * @copyright 2011, Ajax.org B.V.
- * @license GPLv3 <http://www.gnu.org/licenses/gpl.txt>
  */
 define(function(require, exports, module) {
 
