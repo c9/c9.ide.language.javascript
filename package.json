@@ -15,6 +15,7 @@
         "core"
     ],
     "licenses": [
-        "AGPL"
+        "AGPL",
+        "C9SDK"
     ]
 }
