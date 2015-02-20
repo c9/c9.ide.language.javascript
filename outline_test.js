@@ -10,7 +10,7 @@ if (typeof define === "undefined") {
 function outlineSync(handler, document, node) {
     var result;
     handler.outline(document, node, function(o) {
-        result = o.body;
+        result = o.items;
     });
     return result;
 }
@@ -35,7 +35,7 @@ define(function(require, exports, module) {
             assert.equal(outline[1].name, 'simpleFunctionNested(a, b)');
             assert.equal(outline[1].items[0].name, 'nested(c)');
             assert.equal(outline[2].name, 'someFunction(a, b)');
-            assert.equal(outline[3].name, 'bla()');
+            assert.equal(outline[3].name, 'someFunction.bla()');
             done();
         });
     
@@ -62,7 +62,7 @@ define(function(require, exports, module) {
             assert.equal(outline[1].name, 'simpleFunctionNested(a, b)');
             assert.equal(outline[1].items[0].name, 'nested(c)');
             assert.equal(outline[2].name, 'someFunction(a, b)');
-            assert.equal(outline[3].name, 'bla()');
+            assert.equal(outline[3].name, 'someFunction.bla()');
             assert.equal(outline[4].name, 'b[x]()');
             assert.equal(outline[7].items.length, 1);
             assert.equal(outline[3].items[0].items.length, 3);
