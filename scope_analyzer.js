@@ -725,8 +725,8 @@ function addCloud9PluginWarnings(body, markers) {
                 type: isCoreSource ? "info" : "warning",
                 message:
                     isCoreSource
-                        ? "No plugin.on(\"unload\", function() {}) found"
-                        : "Missing plugin.on(\"unload\", function() {})"
+                        ? "No plugin.on(\"load\", function() {}) and/or plugin.on(\"unload\", function() {}) found"
+                        : "Missing plugin.on(\"load\", function() {}) or plugin.on(\"unload\", function() {})"
             });
         }
         return;
@@ -752,7 +752,7 @@ function addCloud9PluginWarnings(body, markers) {
         markers.push({
             pos: mustUninitVars[v].getPos(),
             type: isCoreSource ? "info" : "warning",
-            message: "Please uninit/reset '" + v + "' in plugin unload function"
+            message: "Plugin state; please uninit/reset '" + v + "' in plugin unload function"
         });
     }
 }
