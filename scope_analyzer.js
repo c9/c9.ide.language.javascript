@@ -291,8 +291,9 @@ var KEYWORDS = [
 handler.GLOBALS = GLOBALS;
 
 handler.addGlobals = function(globals) {
-    for (var g in globals)
+    globals.forEach(function(g) {
         GLOBALS[g] = true;
+    });
 };
 
 handler.handlesLanguage = function(language) {
