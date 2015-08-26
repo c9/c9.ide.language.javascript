@@ -290,8 +290,9 @@ var KEYWORDS = [
 /** @internal */
 handler.GLOBALS = GLOBALS;
 
-handler.addGlobal = function(global) {
-    GLOBALS.push(global);
+handler.addGlobals = function(globals) {
+    for (var g in globals)
+        GLOBALS[g] = true;
 };
 
 handler.handlesLanguage = function(language) {
