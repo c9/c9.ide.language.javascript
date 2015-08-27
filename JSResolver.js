@@ -49,7 +49,7 @@ define(function(require, exports, module) {
         }
 
         var delta = {
-            action: "insertText",
+            action: "insert",
             range: new Range(row, column, row, column + insert.length),
             text: insert
         };

@@ -313,6 +313,7 @@ handler.getMaxFileSizeSupported = function() {
     return .25 * 10 * 1000 * 80;
 };
 
+/*
 handler.hasResolution = function(value, ast, marker) {
     if (marker.resolutions && marker.resolutions.length) {
         return true;
@@ -320,6 +321,7 @@ handler.hasResolution = function(value, ast, marker) {
     var resolver = new JSResolver(value, ast);
     return resolver.getType(marker);
 };
+*/
 
 var scopeId = 0;
 
