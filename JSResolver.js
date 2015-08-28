@@ -1,7 +1,6 @@
 define(function(require, exports, module) {
   "use strict";
 
-  var markerResolution = require('plugins/c9.ide.language/MarkerResolution').MarkerResolution;
   var Range = require("ace/range").Range;
 
   var JSResolver = function(value, ast) {
@@ -33,7 +32,7 @@ define(function(require, exports, module) {
     }; 
     
     this.missingSemicolon = function(marker) {
-        var label = "Add semicolon";
+        var message = "Add semicolon";
         var image = "";
         var row = marker.pos.sl;
         var column = marker.pos.sc;
@@ -54,11 +53,16 @@ define(function(require, exports, module) {
             text: insert
         };
         
-        return [markerResolution(label, image, preview, [delta])];
+        return [{
+            message: message,
+            image: image,
+            previewHtml: preview,
+            deltas: [delta]
+        }];
     };
     
     this.unnecessarySemicolon = function(marker) {
-        var label = "Remove semicolon";
+        var message = "Remove semicolon";
         var image = "";
         var row = marker.pos.sl;
         var column = marker.pos.sc;
@@ -73,7 +77,12 @@ define(function(require, exports, module) {
             range: new Range(row, column, row, column + 1)
         };
         
-        return [markerResolution(label, image, preview, [delta])];
+        return [{
+            message: message,
+            image: image,
+            preview: preview,
+            deltas: [delta]
+        }];
     };
 
   };
