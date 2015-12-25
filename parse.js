@@ -40,10 +40,6 @@ handler.getMaxFileSizeSupported = function() {
     return .25 * 10 * 1000 * 80;
 };
 
-handler.isParsingSupported = function() {
-    return true;
-}; 
-
 handler.findNode = function(ast, pos, callback) {
     var treePos = { line: pos.row, col: pos.column };
     callback(ast.findNode(treePos));
