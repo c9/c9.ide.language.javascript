@@ -440,8 +440,8 @@ handler.getIdentifierRegex = function() {
     return (/[a-zA-Z_0-9\$\/]/);
 };
 
-handler.complete = function(doc, fullAst, pos, currentNode, callback) {
-    if (!currentNode || currentNode.cons === "Var")
+handler.complete = function(doc, ast, pos, options, callback) {
+    if (!options.node || options.node.cons === "Var")
         return callback();
 
     var line = doc.getLine(pos.row);
@@ -826,13 +826,13 @@ var isCallback = function(node) {
 };
 
 handler.getRefactorings =
-handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, callback) {
-    if (!currentNode)
+handler.highlightOccurrences = function(doc, fullAst, cursorPos, options, callback) {
+    if (!options.node)
         return callback();
     
     if (!fullAst.annos.scope) {
         return handler.analyze(doc.getValue(), fullAst, function() {
-            handler.highlightOccurrences(doc, fullAst, cursorPos, currentNode, callback);
+            handler.highlightOccurrences(doc, fullAst, cursorPos, options, callback);
         }, true);
     }
 
@@ -856,7 +856,7 @@ handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, ca
             });
         });
     }
-    currentNode.rewrite(
+    options.node.rewrite(
         'Var(x)', function(b, node) {
             var scope = node.getAnnotation("scope");
             if (!scope)
@@ -894,13 +894,14 @@ handler.highlightOccurrences = function(doc, fullAst, cursorPos, currentNode, ca
     });
 };
 
-handler.getRenamePositions = function(doc, fullAst, cursorPos, currentNode, callback) {
+handler.getRenamePositions = function(doc, fullAst, cursorPos, options, callback) {
+    var currentNode = options.node;
     if (!fullAst || !currentNode)
         return callback();
     
     if (!fullAst.annos.scope) {
         return handler.analyze(doc.getValue(), fullAst, function() {
-            handler.getRenamePositions(doc, fullAst, cursorPos, currentNode, callback);
+            handler.getRenamePositions(doc, fullAst, cursorPos, options, callback);
         }, true);
     }
 
