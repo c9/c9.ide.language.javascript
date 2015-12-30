@@ -18,32 +18,32 @@ define(function(require, exports, module) {
     };
         
     // builds an expression for the v8 debugger based on a node
-    expressionBuilder.getInspectExpression = function(doc, fullAst, pos, currentNode, callback) {
-        if (!currentNode) return callback();
+    expressionBuilder.getInspectExpression = function(doc, fullAst, pos, options, callback) {
+        if (!options.node) return callback();
         
-        callback(getExpression(currentNode));
+        callback(getExpression(options.node));
     };
     
     /*** privates ***/
     
     // get a string value of any expression
-    var getExpression = function(d) {
-        if (d.value)
-            return { value: d.value, pos: d.getPos() };
+    var getExpression = function(node) {
+        if (node.value)
+            return { value: node.value, pos: node.getPos() };
         
         var result;
         
         // TODO: simplify this; we can simply get the string
         
-        d.rewrite(
+        node.rewrite(
             // var someVar = ...
             'VarDeclInit(x, _)', 'ConstDeclInit(x, _)', function(b) {
-                d = b.x;
+                node = b.x;
                 result = b.x.value;
             },
             // var someVar;
             'VarDecl(x)', 'ConstDecl(x)', function(b) {
-                d = b.x;
+                node = b.x;
                 result = b.x.value;
             },
             // e.x
@@ -86,7 +86,7 @@ define(function(require, exports, module) {
         if (result === "")
             return;
         
-        return { value: result, pos: d.getPos() };
+        return { value: result, pos: node.getPos() };
     };
 
 });

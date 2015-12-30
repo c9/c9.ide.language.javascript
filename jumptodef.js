@@ -13,11 +13,11 @@ handler.handlesLanguage = function(language) {
     return language === "javascript" || language === "jsx";
 };
 
-handler.jumpToDefinition = function(doc, fullAst, pos, currentNode, callback) {
-    if (!fullAst || !currentNode)
+handler.jumpToDefinition = function(doc, ast, pos, options, callback) {
+    if (!ast || !options.node)
         return callback();
-    scopes.analyze(doc.getValue(), fullAst, function() {
-        scopes.getRenamePositions(doc, fullAst, pos, currentNode, function (data) {
+    scopes.analyze(doc.getValue(), ast, function() {
+        scopes.getRenamePositions(doc, ast, pos, options, function (data) {
             if (!data || !data.declarations || data.declarations.length === 0) {
                 return callback(null);
             }
