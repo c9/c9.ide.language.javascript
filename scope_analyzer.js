@@ -444,8 +444,8 @@ handler.complete = function(doc, ast, pos, options, callback) {
     if (!options.node || options.node.cons === "Var")
         return callback();
 
-    var line = options.line;
-    var identifier = options.identifierPrefix;
+    var line = doc.getLine(pos.row);
+    var identifier = completeUtil.retrievePrecedingIdentifier(line, pos.column, handler.$getIdentifierRegex());
     
     var matches = completeUtil.findCompletions(identifier, SCOPE_ARRAY);
     callback(matches.map(function(m) {
