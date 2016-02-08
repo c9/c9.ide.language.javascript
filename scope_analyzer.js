@@ -223,6 +223,7 @@ var GLOBALS = {
     ReferenceError: true,
     RegExp: true,
     String: true,
+    requestAnimationFrame: true,
     SyntaxError: true,
     TypeError: true,
     URIError: true,
