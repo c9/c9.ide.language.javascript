@@ -169,23 +169,12 @@ var GLOBALS = {
     console: true,
     prompt: true,
     // Frameworks
-    jQuery: true,
-    "$"                      : true,
-    "$$"                     : true,
-    goog: true,
-    dojo: true,
-    dojox: true,
-    dijit: true,
-    apf: true,
     Document: true,
     Element: true,
     Event: true,
     KeyboardEvent: true,
-    MooTools: true,
-    Window: true,
     Ajax: true,
     Field: true,
-    Scriptaculous: true,
     // require.js
     define: true,
     // node.js
