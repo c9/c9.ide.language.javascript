@@ -431,7 +431,7 @@ handler.getIdentifierRegex = function() {
 };
 
 handler.complete = function(doc, ast, pos, options, callback) {
-    if (!options.node || options.node.cons === "Var")
+    if (!options.node || options.node.cons === "Var" || options.line[pos.column - 1] === ".")
         return callback();
 
     var line = options.line;
