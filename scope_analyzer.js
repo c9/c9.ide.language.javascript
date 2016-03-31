@@ -74,10 +74,6 @@ var GLOBALS = {
     Int16Array               : true,
     Int32Array               : true,
     Int8Array                : true,
-
-
-
-
     parent: true,
     print: true,
     removeEventListener: true,
@@ -360,10 +356,9 @@ handler.getIdentifierRegex = function() {
 };
 
 handler.complete = function(doc, ast, pos, options, callback) {
-    if (!options.node || options.node.cons === "Var" || options.line[options.pos.column] === ".")
+    if (!options.node || options.node.cons === "Var" || options.line[pos.column] === ".")
         return callback();
 
-    var line = options.line;
     var identifier = options.identifierPrefix;
     
     var matches = completeUtil.findCompletions(identifier, SCOPE_ARRAY);
