@@ -9,7 +9,7 @@ if (typeof define === "undefined") {
 
 define(function(require, exports, module) {
     var assert = require("assert");
-    var LanguageWorker = require('../c9.ide.language/worker').LanguageWorker;
+    var LanguageWorker = require('../c9.ide.language/worker.core').LanguageWorker;
     var EventEmitter = require("ace/lib/event_emitter").EventEmitter;
     
     describe("Jump To Definition", function(){

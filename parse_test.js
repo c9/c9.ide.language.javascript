@@ -11,7 +11,7 @@ define(function(require, exports, module) {
     var assert = require("ace/test/assertions");
     var handler = require("./parse");
     var scopeHandler = require("./scope_analyzer");
-    var LanguageWorker = require('plugins/c9.ide.language/worker').LanguageWorker;
+    var LanguageWorker = require('plugins/c9.ide.language.core/worker').LanguageWorker;
     var EventEmitter = require("ace/lib/event_emitter").EventEmitter;
     
     describe("Parse", function(){

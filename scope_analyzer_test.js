@@ -9,7 +9,7 @@ if (typeof define === "undefined") {
 
 define(function(require, exports, module) {
     var assert = require("lib/chai/chai").assert;
-    var LanguageWorker = require('plugins/c9.ide.language/worker').LanguageWorker;
+    var LanguageWorker = require('plugins/c9.ide.language.core/worker').LanguageWorker;
     var EventEmitter = require("ace/lib/event_emitter").EventEmitter;
     
     require("plugins/c9.ide.language.javascript/scope_analyzer");
