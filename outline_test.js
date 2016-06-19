@@ -27,7 +27,6 @@ define(function(require, exports, module) {
         it("test basic outline", function(done) {
             var testfile = "" + require('text!./test/test1.js');
             var node = parser.parse(testfile);
-            console.log(Document);
             var outline = outlineSync(handler, new Document(testfile), node);
             //console.log(""+node);
             //console.log(JSON.stringify(outline, null, 2));
