@@ -42,7 +42,7 @@ define(function(require, exports, module) {
             settings.on("read", function() {
                 settings.setDefaults("project/format", [
                     ["javascript_enabled", "false"],
-                    ["javascript_formatter", "eslint_d --fix $file || eslint --fix $file"],
+                    ["javascript_formatter", 'esformatter -i "$file"'],
                 ]);
             });
 
