@@ -18,31 +18,31 @@ define(function(require, exports, module) {
         plugin.on("load", function() {
             prefs.add({
                 "Project": {
-                    "Language Support": {
-                        position: 710,
-                        "JavaScript": {
-                            position: 200,
-                            type: "label",
-                            caption: "JavaScript:",
-                        },
+                    "JavaScript Support": {
+                        position: 1100,
                         "Format Code on Save": {
-                            position: 210,
+                            position: 320,
                             type: "checkbox",
-                            path: "project/format/@javascript_enabled",
+                            path: "project/javascript/@formatOnSave",
                         },
                         "Custom Code Formatter": {
-                            position: 220,
+                            position: 340,
                             type: "textbox",
-                            path: "project/format/@javascript_formatter",
+                            path: "project/javascript/@formatter",
+                            realtime: true,
+                            onchange: function(e) {
+                                if (e.value)
+                                    settings.set("project/javascript/@jsbeautify", false);
+                            }
                         }
                     }
                 }
             }, plugin);
             
             settings.on("read", function() {
-                settings.setDefaults("project/format", [
-                    ["javascript_enabled", "false"],
-                    ["javascript_formatter", 'esformatter -i "$file"'],
+                settings.setDefaults("project/javascript", [
+                    ["formatOnSave", "false"],
+                    ["formatter", 'esformatter -i "$file"'],
                 ]);
             });
 
