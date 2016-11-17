@@ -32,7 +32,7 @@ define(function(require, exports, module) {
                             realtime: true,
                             onchange: function(e) {
                                 if (e.value)
-                                    settings.set("project/javascript/@jsbeautify", false);
+                                    settings.set("project/javascript/@use_jsbeautify", false);
                             }
                         }
                     }
