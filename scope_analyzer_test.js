@@ -15,7 +15,7 @@ define(function(require, exports, module) {
     require("plugins/c9.ide.language.javascript/scope_analyzer");
     require("plugins/c9.ide.language.javascript/parse");
     
-    describe("Scope Analyzer", function(){
+    describe("Scope Analyzer", function() {
         this.timeout(1000000);
         
         it("test jshint-style globals", function(next) {

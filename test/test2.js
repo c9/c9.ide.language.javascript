@@ -28,26 +28,26 @@ function simpleFunctionNested(a, b) {
                 x: 1
             },
             d: 1
-        }
-        this.on(  "listen"  , function() {
+        };
+        this.on("listen", function() {
         
-        })
+        });
     };
 })();
 
 
 a.b[x] = function() {
     
-}
+};
 
 a.b.c = function() {
     
-}
+};
 
 handler = function() {
     
-}
+};
 
 alias = handler = function() {
     
-}
+};

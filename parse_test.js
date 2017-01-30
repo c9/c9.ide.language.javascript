@@ -14,7 +14,7 @@ define(function(require, exports, module) {
     var LanguageWorker = require('plugins/c9.ide.language.core/worker').LanguageWorker;
     var EventEmitter = require("ace/lib/event_emitter").EventEmitter;
     
-    describe("Parse", function(){
+    describe("Parse", function() {
         it("test parsing", function(done) {
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;

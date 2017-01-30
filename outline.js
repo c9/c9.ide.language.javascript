@@ -28,7 +28,7 @@ outlineHandler.handlesLanguage = function(language) {
 outlineHandler.outline = function(doc, ast, callback) {
     if (!ast)
         return callback();
-    callback({ items : outlineSync(doc, ast) });
+    callback({ items: outlineSync(doc, ast) });
 };
     
 function fargsToString(fargs) {
@@ -46,7 +46,7 @@ function expressionToName(node) {
     var name;
     node.rewrite(
         'Var(x)', function(b) { name = b.x.value; },
-        'PropAccess(e, x)', function(b) { name = (b.e.cons === "Var" ? b.e[0].value + "." : "") +  b.x.value; },
+        'PropAccess(e, x)', function(b) { name = (b.e.cons === "Var" ? b.e[0].value + "." : "") + b.x.value; },
         'Index(e, x)', function(b) {
             var parent = (b.e[1] || b.e[0]).value || "";
             if (b.x[0])

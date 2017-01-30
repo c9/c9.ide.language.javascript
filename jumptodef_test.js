@@ -12,7 +12,7 @@ define(function(require, exports, module) {
     var LanguageWorker = require('../c9.ide.language.core/worker').LanguageWorker;
     var EventEmitter = require("ace/lib/event_emitter").EventEmitter;
     
-    describe("Jump To Definition", function(){
+    describe("Jump To Definition", function() {
         this.timeout(1000000);
         
         it("test jump to definition should point to variable declaration", function(next) {
@@ -42,7 +42,7 @@ define(function(require, exports, module) {
             disabledFeatures = { jshint: true };
             var emitter = Object.create(EventEmitter);
             emitter.emit = emitter._dispatchEvent;
-            var definitionListener = function(){definitionListener.callCount += 1};
+            var definitionListener = function() {definitionListener.callCount += 1;};
             definitionListener.callCount = 0;
             emitter.on("definition", definitionListener);
             emitter.once("markers", function(markers) {

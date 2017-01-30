@@ -14,7 +14,7 @@ define(function(require, exports, module) {
     this.getResolutions = function(marker) {
       var type = this.getType(marker);
       if (type) {
-        if (typeof this[type] === 'function'){
+        if (typeof this[type] === 'function') {
           return this[type](marker);
         }
       }

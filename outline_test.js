@@ -23,7 +23,7 @@ define(function(require, exports, module) {
     
     //var microtime = require("microtime");
     
-    describe("Outline", function(){
+    describe("Outline", function() {
         it("test basic outline", function(done) {
             var testfile = "" + require('text!./test/test1.js');
             var node = parser.parse(testfile);

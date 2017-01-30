@@ -39,18 +39,18 @@ var lastAST;
 // Based on https://github.com/jshint/jshint/blob/master/jshint.js#L331
 var GLOBALS = {
     // Literals
-    "true"                   : true,
-    "false"                  : true,
-    "undefined"              : true,
-    "null"                   : true,
-    "arguments"              : true,
-    "Infinity"               : true,
+    "true": true,
+    "false": true,
+    "undefined": true,
+    "null": true,
+    "arguments": true,
+    "Infinity": true,
     onmessage: true,
     postMessage: true,
     importScripts: true,
-    "continue"               : true,
-    "return"                 : true,
-    "else"                   : true,
+    "continue": true,
+    "return": true,
+    "else": true,
     // Browser
     ArrayBuffer: true,
     Attr: true,
@@ -67,13 +67,13 @@ var GLOBALS = {
     document: true,
     event: true,
     FileReader: true,
-    Float32Array             : true,
-    Float64Array             : true,
+    Float32Array: true,
+    Float64Array: true,
     FormData: true,
     getComputedStyle: true,
-    Int16Array               : true,
-    Int32Array               : true,
-    Int8Array                : true,
+    Int16Array: true,
+    Int32Array: true,
+    Int8Array: true,
     parent: true,
     print: true,
     removeEventListener: true,
@@ -88,9 +88,9 @@ var GLOBALS = {
     setInterval: true,
     setTimeout: true,
     SharedWorker: true,
-    Uint16Array              : true,
-    Uint32Array              : true,
-    Uint8Array               : true,
+    Uint16Array: true,
+    Uint32Array: true,
+    Uint8Array: true,
     WebSocket: true,
     window: true,
     Worker: true,
@@ -121,7 +121,7 @@ var GLOBALS = {
     encodeURI: true,
     encodeURIComponent: true,
     Error: true,
-    'eval'                   : true,
+    'eval': true,
     EvalError: true,
     Function: true,
     hasOwnProperty: true,
@@ -285,11 +285,11 @@ var Scope = module.exports.Scope = function Scope(parent) {
 Scope.prototype.declare = function(name, resolveNode, properDeclarationConfidence, kind) {
     var result;
     var vars = this.getVars(kind);
-    if (!vars['_'+name]) {
-        result = vars['_'+name] = new Variable(resolveNode);
+    if (!vars['_' + name]) {
+        result = vars['_' + name] = new Variable(resolveNode);
     }
     else if (resolveNode) {
-        result = vars['_'+name];
+        result = vars['_' + name];
         result.addDeclaration(resolveNode);
     }
     if (result) {
@@ -322,8 +322,8 @@ Scope.prototype.isDeclared = function(name) {
  */
 Scope.prototype.get = function(name, kind) {
     var vars = this.getVars(kind);
-    if (vars['_'+name])
-        return vars['_'+name];
+    if (vars['_' + name])
+        return vars['_' + name];
     else if (this.parent)
         return this.parent.get(name, kind);
 };
@@ -622,7 +622,7 @@ function addCloud9PluginWarnings(body, markers) {
                         function(b, node) {
                             pluginVars[b.x.value] = node;
                         }
-                    )
+                    );
                 });
             },
             'Call(PropAccess(Var("plugin"), "on"), [String("unload"), Function(_, _, fn)])', function(b, node) {
@@ -862,14 +862,14 @@ handler.getRenamePositions = function(doc, fullAst, cursorPos, options, callback
     v && v.declarations.forEach(function(node) {
          if (node !== currentNode[0]) {
             var pos = node.getPos();
-            declarations.push({column: pos.sc, row: pos.sl});
+            declarations.push({ column: pos.sc, row: pos.sl });
         }
     });
     
     v && v.uses.forEach(function(node) {
         if (node !== currentNode) {
             var pos = node.getPos();
-            uses.push({column: pos.sc, row: pos.sl});
+            uses.push({ column: pos.sc, row: pos.sl });
         }
     });
     callback({
